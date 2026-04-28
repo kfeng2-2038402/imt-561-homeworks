@@ -7,14 +7,13 @@
   <script src="https://cdn.jsdelivr.net/npm/p5@1.11.10/lib/p5.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/p5@1.11.10/lib/addons/p5.sound.min.js"></script>
   <link rel="stylesheet" type="text/css" href="style.css">
-  <title>INFO 474: Interactive Information Visualization</title>
+  <title>IMT 561 Portfolio | Data Visualization: Design And Development</title>
 </head>
 
 <body>
   <main>
     <nav class="tabs" role="tablist" aria-label="Main tabs">
-      <button type="button" class="tab-btn active" data-target="tab1" data-sketch="sk1" role="tab"
-        aria-selected="true">Lab 1</button>
+      <button type="button" class="tab-btn active" data-target="tab1" role="tab" aria-selected="true">Welcome</button>
 
       <!-- Homework 4 -->
       <button type="button" class="tab-btn" data-target="hwk4" role="tab">HWK 4. Desc</button>
@@ -35,9 +34,26 @@
       <button type="button" class="tab-btn" data-target="tab14" data-sketch="sk14" role="tab">Ex 10</button>
     </nav>
 
-    <!-- Lab 1: Homepage -->
+    <!-- Welcome: Homepage -->
     <section id="tab1" class="tab-content active" role="tabpanel">
-      <div id="sketch-container-sk1" class="sketch-container"></div>
+      <div class="welcome-template" aria-labelledby="welcome-title">
+        <h2 id="welcome-title">Welcome to My IMT 561 Portfolio</h2>
+
+        <div class="welcome-profile">
+          <div class="welcome-photo" role="img" aria-label="Profile photo placeholder">
+            <!-- Replace with your own photo -->
+            <!-- <img src="images/your-photo.jpg" alt="Photo of [Your name]" /> -->
+            <span>Add a photo</span>
+          </div>
+
+          <div class="welcome-copy">
+            <p><strong>[Your name]</strong> ([optional pronouns])</p>
+            <p>I am a master’s student in [program], focused on [interest area or domain].</p>
+            <p>This quarter I want to get better at [analysis, storytelling, interaction design, etc.].</p>
+            <p>One dataset or topic I am excited to visualize is [topic], because [short reason].</p>
+          </div>
+        </div>
+      </div>
     </section>
 
     <!-- Homework 4: Description -->
