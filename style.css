@@ -94,6 +94,58 @@ canvas {
   margin: 0 0 10px;
 }
 
+.hwk-template {
+  margin-top: 12px;
+  padding-top: 12px;
+}
+
+.hwk-template h3 {
+  margin: 0 0 10px;
+}
+
+.clock-template {
+  margin-top: 18px;
+  padding: 16px;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  background: #fcfdff;
+}
+
+.clock-template h4 {
+  margin: 0 0 8px;
+}
+
+.iteration-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(180px, 1fr));
+  gap: 12px;
+  margin: 10px 0 14px;
+}
+
+.iteration-item {
+  margin: 0;
+}
+
+.iteration-item img {
+  width: 100%;
+  display: block;
+  border-radius: 8px;
+}
+
+.image-placeholder {
+  min-height: 120px;
+  border: 2px dashed #cbd5e1;
+  border-radius: 8px;
+  background: #f8fafc;
+  color: #64748b;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.9rem;
+  text-align: center;
+  padding: 10px;
+}
+
 .small-note {
   color: #64748b;
   font-size: 0.95rem;
@@ -107,6 +159,10 @@ canvas {
   .welcome-photo {
     width: 100%;
     max-width: 200px;
+  }
+
+  .iteration-grid {
+    grid-template-columns: 1fr;
   }
 }
 
