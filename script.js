@@ -9,8 +9,8 @@ window.registerSketch = function (id, factory) {
 
 // map sketch ids to script paths
 const SKETCH_SCRIPT_BY_ID = {
-    sk2: 'sketches/sketch2.js',
-    sk3: 'sketches/sketch3.js',
+    sk2: 'sketches/sketch2-hwk4-1.js',
+    sk3: 'sketches/sketch3-hwk4-2.js',
     sk4: 'sketches/sketch4.js',
     sk5: 'sketches/sketch5.js',
     sk6: 'sketches/sketch6.js',
@@ -22,7 +22,7 @@ const SKETCH_SCRIPT_BY_ID = {
     sk12: 'sketches/sketch12.js',
     sk13: 'sketches/sketch13.js',
     sk14: 'sketches/sketch14.js',
-    sk15: 'sketches/sketch15.js',
+    sk15: 'sketches/sketch15-hwk5.js',
 };
 
 // Default sketch selection logic:
