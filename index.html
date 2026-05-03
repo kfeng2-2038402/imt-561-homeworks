@@ -68,14 +68,16 @@
       <h3 id="sk2-notes-title">Documenting Iterative Process</h3>
 
       <p>
-        <strong>Context of use:</strong> This clock is designed for a quiet indoor space, such as a bedroom,
-        study room, or personal workspace. Instead of showing time through numbers or traditional clock hands,
-        it represents time through a sunset window scene. The goal is to make time feel more visual,
-        environmental, and connected to the way people naturally notice light changing during the day.
+        <strong>Context of use:</strong> This clock is designed for quiet study or work spaces, such as a bedroom,
+        study room, café corner, or personal workspace. I often find that when I study or work for a long time,
+        especially when the outside weather feels gloomy, time can feel slow and it becomes harder to stay focused.
+        Instead of asking users to constantly check a digital timer, this clock turns a focus session into a changing
+        window scene. The goal is to make time feel more visual, ambient, and connected to the gradual shift from
+        mental fog to clearer focus.
       </p>
 
       <article class="clock-template">
-        <h4>Final Clock 1: Sunset Window Clock</h4>
+        <h4>Final Clock 1: Focus Window Clock</h4>
 
         <p class="small-note">Sketch iteration documentation</p>
 
@@ -85,50 +87,75 @@
             <!-- <img src="images/clock1-sketch1.jpg" alt="Initial sketch of the sunset window clock" /> -->
             <div class="image-placeholder">Clock 1 sketch photo 1</div>
             <figcaption>
-              Initial idea — I started with a window scene where the sun moves across a sunset background.
-              The early sketch focused on using natural light instead of a standard clock face.
+              Initial idea — I first imagined this as a sunset window clock. The sun’s movement from left to
+              right was meant to represent minutes, while its movement from top to bottom was meant to represent
+              hours.
             </figcaption>
           </figure>
 
           <figure class="iteration-item">
             <!-- Replace this placeholder with your actual sketch image if you have one -->
-            <!-- <img src="images/clock1-sketch2.jpg" alt="Refined sketch of the sunset window clock" /> -->
+            <!-- <img src="images/clock1-sketch2.jpg" alt="Refined sketch of the focus window clock" /> -->
             <div class="image-placeholder">Clock 1 sketch photo 2</div>
             <figcaption>
-              Refined idea — I changed the design to include a curved path of small suns. The slightly larger
-              sun shows the current time, making the time mapping easier to understand visually.
+              Refined idea — After connecting the design to my study and work context, I changed it into an
+              ambient focus timer. The window gradually moves from foggy and muted to clearer and warmer as the
+              focus session progresses.
             </figcaption>
           </figure>
         </div>
 
         <p>
-          <strong>Design process:</strong> My first version used a simple sunset background and a moving sun,
-          but it felt too close to a regular day-night animation. I revised the design by adding a sequence of
-          small suns along a curved path from the upper-right to the lower-left. The current time is represented
-          by the slightly larger sun on the path, which gives the viewer a clearer sense of progression.
+          <strong>Design process:</strong> My first version was closer to a traditional clock. I used a sunset
+          window scene and imagined the sun as the main time indicator. The sun moving from left to right was
+          intended to represent minutes, while the sun moving from top to bottom was intended to represent hours.
+          However, after sketching this idea, I realized that the mapping was not very easy to read. It did not
+          clearly indicate a specific time as a clock, and users might not immediately understand how to interpret
+          the sun’s position.
         </p>
 
         <p>
-          I also strengthened the background gradient so the transition between yellow, orange, red, and darker
-          red is more visible. This design decision supports the main metaphor of time passing through changes
-          in light. I used visual hierarchy by making the current sun larger than the others, color contrast by
-          placing bright suns against a strong sunset background, and motion by animating the seconds through
-          small edge ticks and subtle cloud movement.
+          More importantly, the early version did not connect strongly enough to my actual context of use. My goal
+          was not only to make a visually interesting clock, but to design something that could support the feeling
+          of studying or working when I am tired, distracted, or mentally foggy. Because of this, I shifted the
+          design from a literal sunset clock into an ambient focus timer. In the final version, the window does not
+          represent the real time of day. Instead, it represents the progress of a focus session.
         </p>
 
         <p>
-          <strong>Time mapping:</strong> The larger sun on the curved path represents the current hour and
-          minute together. As time passes, the active sun moves gradually along the arc instead of jumping only
-          once per hour. The background gradient supports the feeling of time moving from brightness toward
-          darkness. The seconds are shown through small highlighted tick marks around the window frame.
+          In the revised version, the scene starts as pale, gloomy, and foggy. As the session progresses, the fog
+          clouds move outward from the center, the middle of the window becomes brighter, and the sky gradually
+          shifts into warmer colors. This creates a “clearing the fog” effect, which connects to the feeling of
+          slowly entering a better focus state. I also removed the hard trapezoid color layers from the earlier
+          version and replaced them with a continuous gradient and soft atmospheric glow, so the window feels more
+          calm and environmental rather than visually fragmented.
         </p>
 
         <p>
-          <strong>Self-reflection / future work:</strong> I think this clock works well because it turns time
-          into an atmosphere rather than only a number. The window frame gives the design a familiar context,
-          while the sun path creates a clear visual system. In a future version, I would add more intermediate
-          points on the sun path so the movement feels smoother. I would also add a small hover interaction that
-          shows the exact time for users who want a more precise reading.
+          <strong>Time mapping:</strong> The sun’s movement no longer represents exact clock time. Instead, it
+          represents the progress of the focus session. The fogginess at the beginning suggests the difficulty of
+          starting work, while the clearing clouds and brighter center area show progress and growing focus. The
+          warmer sky near the end gives a subtle sense of completion and accomplishment. This makes the clock less
+          about reading the exact time and more about sensing time passing in an ambient way.
+        </p>
+
+        <p>
+          I applied several information visualization principles in the final version. For
+          <strong>mapping</strong>, the sun movement, fog clearing, and color shift all correspond to the progress
+          of the focus session. For <strong>motion</strong>, the fog clouds slowly move from the center toward both
+          sides, making the “clearing” process visible. For <strong>color</strong>, the sky transitions from cool
+          gray-blue tones to warmer yellow and orange tones, suggesting a shift from low energy to focus and
+          completion. For <strong>hierarchy</strong>, the window frame, moving sun, and clearing fog guide the
+          viewer’s attention without requiring them to constantly read numbers.
+        </p>
+
+        <p>
+          <strong>Self-reflection / future work:</strong> This version feels stronger than the early sunset clock
+          because it is tied to a more specific use context. It does not just show that time is passing; it
+          visualizes the experience of moving from distraction to clarity during a focus session. In a future
+          version, I would add an optional session length control, such as 25 minutes for a Pomodoro session or
+          2 minutes for a quick demo. I would also consider adding a subtle completion state, such as a fully clear
+          window or a short message, to help users feel a stronger sense of accomplishment.
         </p>
       </article>
     </div>

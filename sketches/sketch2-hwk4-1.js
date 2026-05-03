@@ -125,24 +125,22 @@ registerSketch('sk2', function (p) {
       p.line(x, y + i, x + w, y + i);
     }
 
-    // soft general glow
     let clarity = p.constrain(p.map(progress, 0.15, 0.85, 0, 1), 0, 1);
     clarity = smoothstep(clarity);
 
     p.noStroke();
 
-    // center glow
-    p.fill(255, 244, 210, 10 + clarity * 18);
-    p.ellipse(x + w * 0.52, y + h * 0.58, w * 0.95, h * 0.42);
+    // Stronger center glow after fog clears
+    p.fill(255, 244, 210, 16 + clarity * 30);
+    p.ellipse(x + w * 0.52, y + h * 0.56, w * 1.02, h * 0.46);
 
-    // subtle upper brightness
-    p.fill(255, 255, 255, 5 + clarity * 8);
-    p.ellipse(x + w * 0.5, y + h * 0.16, w * 0.85, h * 0.24);
+    // Soft upper brightness
+    p.fill(255, 255, 255, 8 + clarity * 14);
+    p.ellipse(x + w * 0.5, y + h * 0.16, w * 0.9, h * 0.26);
   }
 
   function getSkyPalette(progress) {
     let anchors = [
-      // Beginning: gloomy / foggy
       {
         t: 0.00,
         zenith: p.color(220, 228, 234),
@@ -151,7 +149,6 @@ registerSketch('sk2', function (p) {
         lower: p.color(242, 240, 232),
         horizon: p.color(247, 244, 236)
       },
-      // Slowly clearing
       {
         t: 0.25,
         zenith: p.color(188, 214, 238),
@@ -160,7 +157,6 @@ registerSketch('sk2', function (p) {
         lower: p.color(236, 242, 248),
         horizon: p.color(244, 246, 248)
       },
-      // Clearer focus
       {
         t: 0.50,
         zenith: p.color(132, 188, 238),
@@ -169,7 +165,6 @@ registerSketch('sk2', function (p) {
         lower: p.color(238, 236, 214),
         horizon: p.color(252, 226, 180)
       },
-      // Warm progress
       {
         t: 0.75,
         zenith: p.color(120, 154, 220),
@@ -178,7 +173,6 @@ registerSketch('sk2', function (p) {
         lower: p.color(248, 176, 126),
         horizon: p.color(224, 136, 128)
       },
-      // Completion
       {
         t: 1.00,
         zenith: p.color(72, 94, 170),
@@ -216,8 +210,7 @@ registerSketch('sk2', function (p) {
   }
 
   // ----------------------------
-  // Replace hard horizon layers
-  // with very soft atmosphere
+  // Soft atmosphere, no hard trapezoid layers
   // ----------------------------
   function drawAtmosphericGlow(x, y, w, h, progress) {
     let warmth = p.constrain(p.map(progress, 0.35, 1, 0, 1), 0, 1);
@@ -225,15 +218,12 @@ registerSketch('sk2', function (p) {
 
     p.noStroke();
 
-    // soft lower haze
     p.fill(255, 240, 220, 16 + warmth * 12);
     p.ellipse(x + w * 0.5, y + h * 0.88, w * 1.25, h * 0.36);
 
-    // warm horizon bloom
     p.fill(255, 205, 150, warmth * 24);
     p.ellipse(x + w * 0.5, y + h * 0.84, w * 1.05, h * 0.18);
 
-    // subtle cool depth in mid-lower area
     p.fill(255, 255, 255, 10);
     p.ellipse(x + w * 0.5, y + h * 0.68, w * 1.05, h * 0.22);
   }
@@ -307,57 +297,83 @@ registerSketch('sk2', function (p) {
   }
 
   // ----------------------------
-  // Fog clouds
+  // Fog clouds: center opens outward
   // ----------------------------
   function drawFogClouds(x, y, w, h, progress) {
-    let spread = p.map(progress, 0, 1, 0, 165);
-    let alpha = p.map(progress, 0, 1, 170, 0);
+    let clearProgress = smoothstep(progress);
+
+    // Clouds move farther outward, so the clearing is visible
+    let spreadMain = p.lerp(0, 210, clearProgress);
+    let spreadSide = p.lerp(0, 140, clearProgress);
+
+    // Fog fades more strongly over time
+    let alphaMain = p.lerp(210, 0, clearProgress);
+    let alphaSoft = p.lerp(120, 0, clearProgress);
 
     let centerX = x + w / 2;
-    let topBandY = y + 110;
+    let topY = y + 120;
 
     p.noStroke();
-    p.fill(255, 255, 255, alpha * 0.10);
-    p.ellipse(centerX, y + 118, w * 0.72, 74);
-    p.ellipse(centerX, y + 158, w * 0.62, 56);
 
-    drawFogCloudShape(centerX - spread * 0.95, topBandY + 4, 0.86, alpha);
-    drawFogCloudShape(centerX, topBandY + 34, 0.70, alpha * 0.85);
-    drawFogCloudShape(centerX + spread * 0.95, topBandY - 6, 0.84, alpha * 0.95);
+    // General mist at the beginning
+    p.fill(255, 255, 255, alphaSoft * 0.22);
+    p.ellipse(centerX, y + 120, w * 0.9, 90);
+    p.ellipse(centerX, y + 165, w * 0.75, 70);
 
-    drawFogCloudShape(centerX - spread * 0.55, y + 175, 0.56, alpha * 0.62);
-    drawFogCloudShape(centerX + spread * 0.55, y + 190, 0.52, alpha * 0.56);
+    // Stronger center opening glow
+    let openingW = p.lerp(w * 0.12, w * 0.62, clearProgress);
+    let openingH = p.lerp(h * 0.10, h * 0.26, clearProgress);
 
-    let opening = p.map(progress, 0, 1, 0.08, 0.62);
-    p.fill(255, 245, 200, p.map(progress, 0, 1, 0, 30));
-    p.ellipse(centerX, y + 150, w * opening, h * 0.24);
+    p.fill(255, 248, 215, p.lerp(0, 65, clearProgress));
+    p.ellipse(centerX, y + 150, openingW, openingH);
+
+    p.fill(255, 255, 255, p.lerp(0, 28, clearProgress));
+    p.ellipse(centerX, y + 135, openingW * 0.82, openingH * 0.72);
+
+    // Main clouds: start near center, then split outward
+    drawFogCloudShape(centerX - spreadMain, topY + 8, 1.00, alphaMain);
+    drawFogCloudShape(centerX, topY + 30, 0.82, alphaMain * 0.92);
+    drawFogCloudShape(centerX + spreadMain, topY - 2, 0.96, alphaMain);
+
+    // Secondary clouds
+    drawFogCloudShape(centerX - spreadSide, y + 190, 0.68, alphaMain * 0.62);
+    drawFogCloudShape(centerX + spreadSide, y + 200, 0.64, alphaMain * 0.56);
+
+    // Remaining center mist
+    drawFogCloudShape(centerX, y + 245, 0.52, alphaMain * 0.35);
+
+    // Vertical clear path
+    p.fill(255, 250, 220, p.lerp(0, 20, clearProgress));
+    p.ellipse(centerX, y + 190, w * 0.22, h * 0.42);
   }
 
   function drawFogCloudShape(cx, cy, scaleFactor, alpha) {
-    let drift = p.sin(p.frameCount * 0.16 + cx * 0.02) * 2.3;
+    let drift = p.sin(p.frameCount * 0.12 + cx * 0.01) * 1.8;
 
     p.push();
     p.translate(cx + drift, cy);
     p.scale(scaleFactor);
 
     p.noStroke();
-    p.fill(255, 255, 255, alpha * 0.30);
-    p.ellipse(-42, 8, 54, 24);
-    p.ellipse(-14, -2, 58, 28);
-    p.ellipse(16, -6, 62, 30);
-    p.ellipse(46, 4, 52, 22);
-    p.ellipse(8, 12, 110, 18);
+    p.fill(255, 255, 255, alpha * 0.34);
+    p.ellipse(-48, 8, 62, 28);
+    p.ellipse(-18, -4, 68, 34);
+    p.ellipse(18, -6, 72, 36);
+    p.ellipse(52, 6, 60, 26);
 
-    p.fill(255, 255, 255, alpha * 0.16);
-    p.ellipse(0, 18, 120, 14);
+    p.fill(255, 255, 255, alpha * 0.22);
+    p.ellipse(2, 16, 132, 22);
 
-    p.stroke(255, 255, 255, alpha * 0.22);
-    p.strokeWeight(1.3);
+    p.fill(255, 255, 255, alpha * 0.14);
+    p.ellipse(0, 4, 110, 30);
+
+    p.stroke(255, 255, 255, alpha * 0.18);
+    p.strokeWeight(1.2);
     p.noFill();
-    p.arc(-42, 8, 54, 24, 185, 355);
-    p.arc(-14, -2, 58, 28, 185, 355);
-    p.arc(16, -6, 62, 30, 185, 355);
-    p.arc(46, 4, 52, 22, 185, 355);
+    p.arc(-48, 8, 62, 28, 185, 355);
+    p.arc(-18, -4, 68, 34, 185, 355);
+    p.arc(18, -6, 72, 36, 185, 355);
+    p.arc(52, 6, 60, 26, 185, 355);
 
     p.pop();
   }
