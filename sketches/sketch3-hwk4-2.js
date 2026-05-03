@@ -1,232 +1,197 @@
 // Instance-mode sketch for tab 3
 registerSketch('sk3', function (p) {
-  const CANVAS_SIZE = 800;
-  let shake = 0;
+  const CANVAS_W = 500;
+  const CANVAS_H = 600;
+
+  let totalMinutes = 25;
+  let totalSeconds = totalMinutes * 60;
+  let startTime;
+
+  let lastMinute = -1;
+  let stirStartTime = 0;
+  let isStirring = false;
+
+  let bobas = [];
 
   p.setup = function () {
-    p.createCanvas(CANVAS_SIZE, CANVAS_SIZE);
-    p.angleMode(p.DEGREES);
-    p.textFont("Arial");
+    p.createCanvas(CANVAS_W, CANVAS_H);
+    initializeTimer();
   };
 
   p.draw = function () {
-    let h = p.hour();
-    let m = p.minute();
-    let s = p.second();
+    p.background(245, 238, 225);
 
-    p.background(250, 238, 220);
+    let elapsedSeconds = (p.millis() - startTime) / 1000;
+    let elapsedMinutes = p.floor(elapsedSeconds / 60);
+    let remainingSeconds = p.max(totalSeconds - elapsedSeconds, 0);
+    let remainingMinutes = p.ceil(remainingSeconds / 60);
 
-    if (shake > 0) {
-      shake *= 0.9;
+    if (elapsedMinutes !== lastMinute && elapsedMinutes > 0 && elapsedMinutes <= totalMinutes) {
+      lastMinute = elapsedMinutes;
+      stirStartTime = p.millis();
+      isStirring = true;
     }
 
-    let offsetX = p.random(-shake, shake);
+    if (p.millis() - stirStartTime > 900) {
+      isStirring = false;
+    }
 
-    p.push();
-    p.translate(offsetX, 0);
+    let progress = p.constrain(elapsedSeconds / totalSeconds, 0, 1);
 
-    // Cup settings
-    let cupTopY = 150;
-    let cupBottomY = 620;
-    let cupLeftTop = 250;
-    let cupRightTop = 550;
-    let cupLeftBottom = 295;
-    let cupRightBottom = 505;
-
-    // Cup outline
-    p.stroke(60);
-    p.strokeWeight(6);
-    p.fill(255, 245, 230, 120);
-    p.quad(
-      cupLeftTop,
-      cupTopY,
-      cupRightTop,
-      cupTopY,
-      cupRightBottom,
-      cupBottomY,
-      cupLeftBottom,
-      cupBottomY
-    );
-
-    // Minute = milk tea liquid height
-    // 0 minute = lower level, 59 minutes = higher level
-    let liquidTopY = p.map(m, 0, 59, cupBottomY - 140, cupTopY + 70);
-
-    // Drink liquid shape
-    p.noStroke();
-    p.fill(210, 160, 105, 220);
-    p.quad(
-      p.map(liquidTopY, cupTopY, cupBottomY, cupLeftTop + 15, cupLeftBottom + 5),
-      liquidTopY,
-      p.map(liquidTopY, cupTopY, cupBottomY, cupRightTop - 15, cupRightBottom - 5),
-      liquidTopY,
-      cupRightBottom - 15,
-      cupBottomY - 20,
-      cupLeftBottom + 15,
-      cupBottomY - 20
-    );
-
-    // Liquid surface
-    p.fill(255, 235, 205, 130);
-    p.ellipse(400, liquidTopY, 235, 26);
-
-    // Brown sugar layer at bottom
-    p.noStroke();
-    p.fill(120, 70, 35, 130);
-    p.quad(315, 545, 485, 545, 500, 600, 300, 600);
-
-    // Boba pearls at bottom
-    drawBobaPearls(s);
-
-    // Bubbles rise with seconds
-    drawBubbles(s, liquidTopY);
-
-    // L-shaped straw as clock hands
-    // The bend point is inside the cup, but the long straw extends outside.
-    drawLStraw(h, m);
-
-    // Cup rim on top
-    // This is drawn after the straw so it looks like the straw goes through the cup opening.
-    p.noFill();
-    p.stroke(60);
-    p.strokeWeight(5);
-    p.ellipse(400, cupTopY, 305, 36);
-
-    p.pop();
-
-    // Title
-    p.noStroke();
-    p.fill(50);
-    p.textAlign(p.CENTER);
-    p.textSize(48);
-    p.text("Boba Clock", p.width / 2, 710);
-
-    // Canvas frame
-    p.noFill();
-    p.stroke(0);
-    p.strokeWeight(1);
-    p.rect(0, 0, p.width - 1, p.height - 1);
+    drawBobaCup(progress, remainingMinutes);
+    drawText(remainingSeconds);
   };
-
-  function drawLStraw(h, m) {
-  // Bend point is at the lowest point of the straw, inside the cup
-  let pivotX = 400;
-  let pivotY = 520;
-
-  // Long straw angle = hour
-  // This long part extends from the low bend point to outside the cup.
-  let hourAngle = p.map((h % 12) + m / 60, 0, 12, -30, 30);
-
-  // Short bent part = minute
-  // This rotates from the bottom bend point inside the cup.
-  let minuteAngle = p.map(m, 0, 59, -140, -40);
-
-  p.push();
-  p.translate(pivotX, pivotY);
-
-  // -----------------------------
-  // Long straw segment
-  // From bottom bend point upward and outside the cup
-  // -----------------------------
-  p.push();
-  p.rotate(hourAngle);
-
-  // Outer dark edge
-  p.stroke(70);
-  p.strokeWeight(18);
-  p.line(0, 0, 0, -455);
-
-  // Pink straw body
-  p.stroke(255, 165, 185);
-  p.strokeWeight(10);
-  p.line(0, 0, 0, -455);
-
-  p.pop();
-
-  // -----------------------------
-  // Short L-shaped segment
-  // Connected at the lowest bend point
-  // -----------------------------
-  p.push();
-  p.rotate(minuteAngle);
-
-  p.stroke(70);
-  p.strokeWeight(18);
-  p.line(0, 0, 110, 0);
-
-  p.stroke(255, 165, 185);
-  p.strokeWeight(10);
-  p.line(0, 0, 110, 0);
-
-  p.pop();
-
-  // Bend joint at the lowest point
-  p.noStroke();
-  p.fill(255, 165, 185);
-  p.circle(0, 0, 24);
-
-  p.stroke(70);
-  p.strokeWeight(3);
-  p.noFill();
-  p.circle(0, 0, 26);
-
-  p.pop();
-}
-  
-  function drawBobaPearls(sec) {
-    p.noStroke();
-
-    let pearlPositions = [
-      [330, 575],
-      [365, 585],
-      [400, 570],
-      [435, 585],
-      [470, 575],
-      [345, 535],
-      [385, 545],
-      [425, 535],
-      [455, 548],
-      [360, 500],
-      [405, 505],
-      [445, 500]
-    ];
-
-    for (let i = 0; i < pearlPositions.length; i++) {
-      let x = pearlPositions[i][0];
-      let y = pearlPositions[i][1];
-
-      // Tiny second-based bounce
-      let bounce = p.sin(sec * 6 + i * 20) * 2;
-
-      p.fill(50, 30, 22);
-      p.circle(x, y + bounce, 25);
-
-      // Pearl highlight
-      p.fill(255, 255, 255, 60);
-      p.circle(x - 5, y - 5 + bounce, 7);
-    }
-  }
-
-  function drawBubbles(sec, liquidTopY) {
-    p.noStroke();
-    p.fill(255, 255, 255, 130);
-
-    for (let i = 0; i < 9; i++) {
-      let x = 310 + i * 22;
-      let y = 585 - ((sec * 6 + i * 37) % 260);
-
-      // Only show bubbles inside the liquid area
-      if (y > liquidTopY + 10 && y < 600) {
-        p.circle(x, y, 9);
-      }
-    }
-  }
 
   p.mousePressed = function () {
-    shake = 12;
+    if (p.mouseX >= 0 && p.mouseX <= p.width && p.mouseY >= 0 && p.mouseY <= p.height) {
+      initializeTimer();
+    }
   };
 
-  p.windowResized = function () {
-    p.resizeCanvas(CANVAS_SIZE, CANVAS_SIZE);
-  };
+  function initializeTimer() {
+    startTime = p.millis();
+    lastMinute = -1;
+    stirStartTime = 0;
+    isStirring = false;
+    bobas = [];
+
+    for (let i = 0; i < totalMinutes; i++) {
+      bobas.push({
+        x: p.random(-75, 75),
+        y: p.random(55, 130),
+        size: p.random(16, 22),
+        phase: p.random(p.TWO_PI)
+      });
+    }
+  }
+
+  function drawBobaCup(progress, remainingMinutes) {
+    let cupX = p.width / 2;
+    let cupY = 320;
+    let cupW = 220;
+    let cupH = 300;
+
+    p.stroke(80);
+    p.strokeWeight(3);
+    p.fill(255, 248, 235);
+    p.quad(
+      cupX - cupW / 2, cupY - cupH / 2,
+      cupX + cupW / 2, cupY - cupH / 2,
+      cupX + cupW / 2 - 30, cupY + cupH / 2,
+      cupX - cupW / 2 + 30, cupY + cupH / 2
+    );
+
+    let liquidH = p.map(progress, 0, 1, cupH - 35, 18);
+    let liquidTop = cupY + cupH / 2 - liquidH;
+
+    p.noStroke();
+    p.fill(210, 165, 105, 135);
+    p.quad(
+      cupX - cupW / 2 + 12, liquidTop,
+      cupX + cupW / 2 - 12, liquidTop,
+      cupX + cupW / 2 - 38, cupY + cupH / 2 - 10,
+      cupX - cupW / 2 + 38, cupY + cupH / 2 - 10
+    );
+
+    p.fill(255, 235, 200, 60);
+    p.ellipse(cupX, liquidTop + 15, cupW - 45, 18);
+
+    p.fill(45, 30, 25, 220);
+
+    let visibleBobaCount = p.constrain(remainingMinutes, 0, totalMinutes);
+
+    for (let i = 0; i < visibleBobaCount; i++) {
+      let b = bobas[i];
+
+      let moveX = 0;
+      let moveY = 0;
+
+      if (isStirring) {
+        let t = (p.millis() - stirStartTime) / 900;
+        let ease = p.sin(t * p.PI);
+        moveX = p.sin(t * p.TWO_PI + b.phase) * 6 * ease;
+        moveY = p.cos(t * p.TWO_PI + b.phase) * 4 * ease;
+      }
+
+      let bx = cupX + b.x + moveX;
+      let by = cupY + b.y + moveY;
+
+      bx = p.constrain(bx, cupX - 78, cupX + 78);
+      by = p.constrain(by, cupY + 45, cupY + 132);
+
+      p.circle(bx, by, b.size);
+    }
+
+    p.stroke(180, 80, 90, 230);
+    p.strokeWeight(12);
+
+    let baseAngle = -0.15;
+    let stirAngle = 0;
+    let verticalMove = 0;
+
+    if (isStirring) {
+      let t = (p.millis() - stirStartTime) / 900;
+      let ease = p.sin(t * p.PI);
+      stirAngle = p.sin(t * p.TWO_PI) * 0.12 * ease;
+      verticalMove = p.sin(t * p.TWO_PI) * 7 * ease;
+    }
+
+    let angle = baseAngle + stirAngle;
+
+    let bendX = cupX + 25 + p.sin(angle) * 20;
+    let bendY = cupY - 75 + verticalMove;
+
+    let topX = bendX - 45 + p.sin(angle) * 40;
+    let topY = 90 + verticalMove;
+
+    let bottomX = cupX + 10 + p.sin(angle) * 35;
+    let bottomY = cupY + 75 + verticalMove * 0.4;
+
+    p.line(topX, topY, bendX, bendY);
+    p.line(bendX, bendY, bottomX, bottomY);
+
+    if (isStirring) {
+      p.noFill();
+      p.stroke(255, 235, 205, 110);
+      p.strokeWeight(2);
+
+      let t = (p.millis() - stirStartTime) / 900;
+
+      for (let i = 0; i < 2; i++) {
+        p.arc(
+          cupX,
+          cupY + 70 + i * 22,
+          70 + i * 20,
+          18,
+          t * p.TWO_PI + i,
+          t * p.TWO_PI + p.PI + i
+        );
+      }
+    }
+
+    p.stroke(255, 255, 255, 120);
+    p.strokeWeight(4);
+    p.line(cupX - 65, cupY - 120, cupX - 45, cupY + 90);
+  }
+
+  function drawText(remainingSeconds) {
+    let minutes = p.floor(remainingSeconds / 60);
+    let seconds = p.floor(remainingSeconds % 60);
+
+    p.fill(60);
+    p.noStroke();
+    p.textAlign(p.CENTER);
+
+    p.textSize(24);
+    p.text("Boba Focus Clock", p.width / 2, 50);
+
+    p.textSize(16);
+    p.text("The liquid slowly decreases, and boba moves once each minute.", p.width / 2, 80);
+
+    p.textSize(16);
+    p.text("Click the canvas to restart.", p.width / 2, 105);
+
+    p.textSize(28);
+    p.text(p.nf(minutes, 2) + ":" + p.nf(seconds, 2), p.width / 2, 540);
+  }
 });
