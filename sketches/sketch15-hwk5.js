@@ -98,12 +98,13 @@ registerSketch('sk15', function (p) {
     p.textAlign(p.CENTER, p.CENTER);
 
     p.textStyle(p.BOLD);
-    p.textSize(27);
-    p.text("SEATTLE WINTER FEELING", cx, 230);
+    p.textSize(25);
+    p.text("SEATTLE WINTER FEELING", cx, 178);
 
     p.textStyle(p.NORMAL);
-    p.textSize(20);
-    p.text("Weather-based pattern: Oct–Mar", cx, 260);
+    p.textSize(17);
+    p.fill(75, 75, 75);
+    p.text("Outer ring: daylight + precipitation", cx, 207);
   }
 
   function drawCenterText() {
@@ -155,10 +156,10 @@ registerSketch('sk15', function (p) {
 
     p.noStroke();
     p.fill(55, 55, 55);
-    p.text("Shortest daylight\nanchors the winter\nfeeling.", 735, 195);
+    p.text("Shortest daylight\nanchors the winter\nfeeling.", 785, 215);
     p.stroke(70);
     p.strokeWeight(2);
-    drawArrow(765, 270, 680, 300);
+    drawArrow(815, 290, 700, 315);
 
     p.noStroke();
     p.fill(55, 55, 55);
@@ -229,7 +230,7 @@ registerSketch('sk15', function (p) {
     drawCloudIcon(x + 118, y + 180, 0.38);
 
     p.fill(50);
-    p.text("= seasonal reference icons", x + 145, y + 180);
+    p.text("= seasonal reference\n   in calendar ring", x + 145, y + 174);
   }
 
   function drawSource() {
@@ -352,7 +353,7 @@ registerSketch('sk15', function (p) {
       const ix = cx + p.cos(centerAngle) * iconR;
       const iy = cy + p.sin(centerAngle) * iconR + 5;
 
-      drawSeasonIcon(i, ix, iy, 0.34);
+      drawSeasonIcon(i, ix, iy, 0.43);
     }
 
     p.noStroke();
@@ -368,11 +369,10 @@ registerSketch('sk15', function (p) {
     const seg = p.TWO_PI / 12;
 
     // Felt winter = Oct–Mar
-    // month index: Oct=9, Nov=10, Dec=11, Jan=0, Feb=1, Mar=2
     const startAngle = (-p.HALF_PI + 9 * seg) - seg * 0.48;
     const endAngle = (-p.HALF_PI + 2 * seg) + seg * 0.48;
 
-    const arcR = outerOuterR + 26;
+    const arcR = outerOuterR + 18;
 
     p.push();
     p.noFill();
@@ -387,15 +387,15 @@ registerSketch('sk15', function (p) {
 
     p.noStroke();
     p.fill(70, 105, 180);
-    p.textAlign(p.CENTER, p.CENTER);
+    p.textAlign(p.LEFT, p.CENTER);
 
     p.textStyle(p.BOLD);
-    p.textSize(16);
-    p.text("FELT WINTER", cx - 35, cy - arcR - 12);
+    p.textSize(15);
+    p.text("FELT WINTER", 285, 245);
 
     p.textStyle(p.NORMAL);
-    p.textSize(14);
-    p.text("(about 6 months)", cx + 88, cy - arcR - 12);
+    p.textSize(13);
+    p.text("(about 6 months)", 390, 245);
   }
 
   function drawWrappedArc(cx, cy, r, startAngle, endAngle) {
@@ -544,7 +544,7 @@ registerSketch('sk15', function (p) {
     p.scale(scale);
 
     p.noStroke();
-    p.fill(220, 224, 230, 185);
+    p.fill(205, 213, 222, 235);
     p.ellipse(-16, 0, 30, 22);
     p.ellipse(0, -8, 38, 28);
     p.ellipse(18, 0, 30, 22);
@@ -559,10 +559,10 @@ registerSketch('sk15', function (p) {
     p.scale(scale);
 
     p.noStroke();
-    p.fill(244, 196, 92, 190);
+    p.fill(244, 190, 82, 240);
     p.circle(-10, -10, 18);
 
-    p.fill(225, 229, 234, 190);
+    p.fill(210, 218, 226, 235);
     p.ellipse(-4, 2, 24, 18);
     p.ellipse(10, -4, 30, 22);
     p.ellipse(24, 2, 24, 18);
@@ -577,10 +577,10 @@ registerSketch('sk15', function (p) {
     p.scale(scale);
 
     p.noStroke();
-    p.fill(244, 196, 92, 200);
+    p.fill(244, 190, 82, 245);
     p.circle(0, 0, 20);
 
-    p.stroke(244, 196, 92, 180);
+    p.stroke(244, 190, 82, 235);
     p.strokeWeight(2);
     for (let a = 0; a < p.TWO_PI; a += p.PI / 4) {
       const x1 = p.cos(a) * 14;
