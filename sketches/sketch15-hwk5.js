@@ -40,10 +40,10 @@ registerSketch('sk15', function (p) {
     p.background(248, 246, 240);
 
     drawTitle();
+    drawStoryLabels();
     drawDoubleRing();
     drawFeltWinterIndicator();
     drawCenterText();
-    drawStoryLabels();
     drawAnnotations();
     drawLegend();
     drawSource();
@@ -94,17 +94,12 @@ registerSketch('sk15', function (p) {
     const cx = p.width / 2;
 
     p.noStroke();
-    p.fill(38, 38, 38);
+    p.fill(75, 75, 75);
     p.textAlign(p.CENTER, p.CENTER);
 
-    p.textStyle(p.BOLD);
-    p.textSize(25);
-    p.text("SEATTLE WINTER FEELING", cx, 178);
-
     p.textStyle(p.NORMAL);
-    p.textSize(17);
-    p.fill(75, 75, 75);
-    p.text("Outer ring: daylight + precipitation", cx, 207);
+    p.textSize(16);
+    p.text("Outer ring: daylight + precipitation   |   Inner ring: calendar months", cx, 205);
   }
 
   function drawCenterText() {
@@ -163,25 +158,25 @@ registerSketch('sk15', function (p) {
 
     p.noStroke();
     p.fill(55, 55, 55);
-    p.text("Daylight returns,\nbut March still\ncarries rain.", 890, 470);
+    p.text("Daylight returns,\nbut March still\ncarries rain.", 850, 470);
     p.stroke(70);
     p.strokeWeight(2);
-    drawArrow(915, 540, 835, 555);
+    drawArrow(875, 540, 835, 555);
 
     p.noStroke();
     p.fill(95, 95, 95);
     p.textSize(14);
     p.textAlign(p.LEFT, p.TOP);
     p.text(
-      "“Felt winter” is an interpretive framing based on 2025 daylight,\nprecipitation, and cloud-cover patterns. Actual experience varies by person and year.",
+      "“Felt winter” is an interpretive framing based on 2025 daylight, precipitation, and cloud-cover patterns.",
       70,
-      1115
+      1145
     );
   }
 
   function drawLegend() {
     const x = 770;
-    const y = 970;
+    const y = 995;
     const w = 260;
     const h = 215;
 
@@ -225,9 +220,9 @@ registerSketch('sk15', function (p) {
     p.fill(50);
     p.text("= official winter\n   in inner ring", x + 58, y + 132);
 
-    drawSunIcon(x + 30, y + 180, 0.38);
-    drawSunCloudIcon(x + 72, y + 180, 0.38);
-    drawCloudIcon(x + 118, y + 180, 0.38);
+    drawSunIcon(x + 30, y + 180, 0.34);
+    drawSunCloudIcon(x + 72, y + 180, 0.34);
+    drawCloudIcon(x + 118, y + 180, 0.34);
 
     p.fill(50);
     p.text("= seasonal reference\n   in calendar ring", x + 145, y + 174);
@@ -285,7 +280,7 @@ registerSketch('sk15', function (p) {
       drawRingSegment(cx, cy, outerInnerR, outerOuterR, startAngle, endAngle);
 
       if (isFeltWinterMonth(i)) {
-        p.stroke(35, 45, 65, 80);
+        p.stroke(35, 45, 65, 70);
         p.strokeWeight(2);
         p.noFill();
         drawRingSegment(cx, cy, outerInnerR, outerOuterR, startAngle, endAngle);
@@ -353,7 +348,7 @@ registerSketch('sk15', function (p) {
       const ix = cx + p.cos(centerAngle) * iconR;
       const iy = cy + p.sin(centerAngle) * iconR + 5;
 
-      drawSeasonIcon(i, ix, iy, 0.43);
+      drawSeasonIcon(i, ix, iy, 0.36);
     }
 
     p.noStroke();
@@ -376,8 +371,8 @@ registerSketch('sk15', function (p) {
 
     p.push();
     p.noFill();
-    p.stroke(70, 105, 180);
-    p.strokeWeight(2.4);
+    p.stroke(70, 105, 180, 160);
+    p.strokeWeight(2);
     p.drawingContext.setLineDash([9, 7]);
 
     drawWrappedArc(cx, cy, arcR, startAngle, endAngle);
@@ -386,7 +381,7 @@ registerSketch('sk15', function (p) {
     p.pop();
 
     p.noStroke();
-    p.fill(70, 105, 180);
+    p.fill(70, 105, 180, 190);
     p.textAlign(p.LEFT, p.CENTER);
 
     p.textStyle(p.BOLD);

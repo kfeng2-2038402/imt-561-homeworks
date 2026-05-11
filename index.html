@@ -27,19 +27,32 @@
     <section id="tab1" class="tab-content active" role="tabpanel">
       <div class="welcome-template" aria-labelledby="welcome-title">
         <h2 id="welcome-title">Welcome to My IMT 561 Portfolio</h2>
-
+    
         <div class="welcome-profile">
           <div class="welcome-photo" role="img" aria-label="Profile photo placeholder">
             <!-- Replace with your own photo -->
-            <!-- <img src="images/your-photo.jpg" alt="Photo of [Your name]" /> -->
+            <!-- <img src="images/your-photo.jpg" alt="Photo of Kexuan Feng" /> -->
             <span>Add a photo</span>
           </div>
-
+    
           <div class="welcome-copy">
             <p><strong>Kexuan Feng</strong> (pronouns: she/her)</p>
-            <p>I am a master’s student in MSIM, focused on UI&UX.</p>
-            <p>This quarter I want to get better at [analysis, storytelling, interaction design, etc.].</p>
-            <p>One dataset or topic I am excited to visualize is [topic], because [short reason].</p>
+    
+            <p>
+              I am a master’s student in MSIM, with interests in UI/UX, data visualization,
+              and information systems.
+            </p>
+    
+            <p>
+              This quarter, I want to get better at turning data into clear visual stories,
+              especially by combining analysis, interaction design, and narrative visualization.
+            </p>
+    
+            <p>
+              One dataset or topic I am excited to visualize is Seattle weather because I am
+              interested in how daylight, rain, and seasonal patterns shape people’s everyday
+              experiences in the city.
+            </p>
           </div>
         </div>
       </div>
@@ -242,7 +255,7 @@
   </div>
 </section>
 
-    <!-- Homework 5: Narrative Visualization -->
+<!-- Homework 5: Narrative Visualization -->
 <!-- Homework 5: Narrative Visualization -->
 <section id="tab15" class="tab-content" role="tabpanel">
   <div id="sketch-container-sk15" class="sketch-container"></div>
@@ -255,37 +268,38 @@
         <h4>Why Seattle Winter Feels Longer Than Three Months</h4>
 
         <p class="small-note">
-          A narrative visualization about daylight, precipitation, and the feeling of Seattle winter.
+          A narrative visualization about daylight, precipitation, and the weather-based feeling of Seattle winter.
         </p>
 
         <p>
           <strong>Dataset:</strong> This visualization uses 2025 Seattle historical weather data
           from Visual Crossing. The original dataset contains daily weather records, including
-          precipitation, cloud cover, sunrise, sunset, temperature, and weather conditions.
+          sunrise, sunset, precipitation, rainy days, cloud cover, temperature, and weather conditions.
         </p>
 
         <p>
           <strong>Story:</strong> I chose this topic because in another class, we discussed how
-          Seattle winter can make people feel depressed or low-energy. A lot of that conversation
-          focused on two environmental factors: limited daylight and frequent rain. Instead of only
-          showing that “Seattle is rainy,” this visualization explores how shorter daylight and
-          precipitation together can make winter feel longer than the official calendar season.
+          Seattle winter can make people feel depressed, tired, or low-energy. That conversation
+          focused on limited daylight and frequent rain. Instead of only showing that “Seattle is rainy,”
+          this visualization explores how shorter daylight and precipitation together can make winter
+          feel longer than the official calendar season.
         </p>
 
         <p>
-          <strong>Design concept:</strong> The visualization uses a double-ring structure. The outer
-          ring represents the weather-based winter feeling across the year: darker colors show shorter
-          average daylight hours, and raindrops show total monthly precipitation. The inner ring works
+          <strong>Design concept:</strong> The visualization uses a double-ring seasonal structure.
+          The outer ring shows the weather experience across the year: color represents average
+          daylight hours, and raindrops represent total monthly precipitation. The inner ring works
           as a calendar reference, showing all 12 months and highlighting official winter from
-          December to February. This separates the weather experience from the official calendar season.
+          December to February. A dashed blue arc marks the weather-based felt winter pattern from
+          October to March.
         </p>
 
         <p>
           <strong>Interaction:</strong> This visualization is mostly author-driven because the title,
-          annotations, color choices, and layout guide viewers toward one main story. It also includes
-          a small user-driven element: viewers can hover over each month to see exact monthly values,
-          including average daylight hours, total precipitation, rainy days, cloud cover, and whether
-          that month falls within official winter.
+          annotations, center text, and visual layout guide viewers toward one main story. It also
+          includes a small user-driven element: viewers can hover over each month to see exact monthly
+          values, including average daylight hours, total precipitation, rainy days, cloud cover,
+          cloudy days, and whether the month falls within official winter.
         </p>
 
         <p>
@@ -307,8 +321,15 @@
           <strong>Encoding choices:</strong> Color is used only for average daylight hours, so darker
           months visually communicate shorter days. Raindrops represent total monthly precipitation,
           not rainy-day count. The inner ring provides calendar context, while the highlighted
-          December–February section marks official winter. This design keeps the main visual hierarchy
-          focused on the contrast between official winter and a longer weather-based winter feeling.
+          December–February section marks official winter. The seasonal icons in the inner ring are
+          used only as calendar references, not as additional data encodings.
+        </p>
+
+        <p>
+          <strong>Clarity and hierarchy:</strong> I separated weather experience and calendar time into
+          two layers. The viewer should first notice the title and center contrast between official
+          winter and felt winter, then read the outer ring for daylight and precipitation patterns,
+          and finally use the inner ring and hover tooltip for more detailed context.
         </p>
       </article>
     </div>
