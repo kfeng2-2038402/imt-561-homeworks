@@ -8,8 +8,8 @@ registerSketch('sk2', function (p) {
   let isFinished = false;
 
   const buttons = {
-    startPause: { x: 250, y: 710, w: 135, h: 44 },
-    reset: { x: 415, y: 710, w: 135, h: 44 }
+    startPause: { x: 250, y: 722, w: 140, h: 42 },
+    reset: { x: 410, y: 722, w: 140, h: 42 }
   };
 
   p.setup = function () {
@@ -32,14 +32,13 @@ registerSketch('sk2', function (p) {
     drawRoomBackground(progress);
 
     let winX = 190;
-    let winY = 90;
+    let winY = 65;
     let winW = 420;
     let winH = 420;
 
     drawWindow(winX, winY, winW, winH, progress);
     drawInterface(progress, remainingMs);
 
-    // Canvas border
     p.noFill();
     p.stroke(0);
     p.strokeWeight(1);
@@ -80,6 +79,7 @@ registerSketch('sk2', function (p) {
       } else {
         startTimer();
       }
+      return;
     }
 
     if (isInsideButton(buttons.reset)) {
@@ -97,19 +97,30 @@ registerSketch('sk2', function (p) {
   }
 
   function drawWindow(x, y, w, h, progress) {
+    // Outer shadow
+    p.noStroke();
+    p.fill(80, 60, 45, 28);
+    p.rect(x - 24, y - 20, w + 60, h + 58, 14);
+
     // Outer frame
     p.noFill();
-    p.stroke(25);
+    p.stroke(28);
     p.strokeWeight(8);
-    p.rect(x - 30, y - 30, w + 60, h + 60, 8);
+    p.rect(x - 30, y - 30, w + 60, h + 60, 10);
 
     // Inner frame
     p.strokeWeight(3);
-    p.rect(x, y, w, h, 4);
+    p.rect(x, y, w, h, 5);
 
     drawSkyGradient(x, y, w, h, progress);
     drawFogAndClarity(x, y, w, h, progress);
     drawHighContrastSunPath(x, y, w, h, progress);
+
+    // Window frame overlay
+    p.noFill();
+    p.stroke(28);
+    p.strokeWeight(4);
+    p.rect(x, y, w, h, 5);
   }
 
   function drawRoomBackground(progress) {
@@ -134,7 +145,6 @@ registerSketch('sk2', function (p) {
   }
 
   function drawSkyGradient(x, y, w, h, progress) {
-    // Starts foggy and low-energy, then becomes warmer and clearer
     let top = p.lerpColor(
       p.color(180, 192, 205),
       p.color(88, 126, 205),
@@ -174,17 +184,17 @@ registerSketch('sk2', function (p) {
 
     p.noStroke();
 
-    // Fog layers at beginning
+    // Fog layers at the beginning of focus
     p.fill(255, 255, 255, fogAlpha * 0.48);
     p.ellipse(x + w * 0.50, y + h * 0.33, w * 0.9, 95);
     p.ellipse(x + w * 0.40, y + h * 0.43, w * 0.76, 72);
     p.ellipse(x + w * 0.62, y + h * 0.50, w * 0.78, 78);
 
-    // Clearing center light
+    // Light gradually opens up as the session continues
     p.fill(255, 240, 190, p.lerp(20, 90, progress));
     p.ellipse(x + w * 0.5, y + h * 0.45, clearWidth, h * 0.34);
 
-    // Warm break cue near the end
+    // Warm cue near completion
     let endWarmth = p.constrain(p.map(progress, 0.75, 1, 0, 1), 0, 1);
     p.fill(255, 190, 130, endWarmth * 60);
     p.ellipse(x + w * 0.5, y + h * 0.80, w * 0.95, h * 0.24);
@@ -203,13 +213,13 @@ registerSketch('sk2', function (p) {
     let x2 = winX + 65;
     let y2 = winY + winH - 90;
 
-    // High contrast path outline
+    // Dark outline for accessibility
     p.noFill();
-    p.stroke(30, 30, 45, 230);
+    p.stroke(28, 28, 44, 235);
     p.strokeWeight(7);
     p.bezier(x1, y1, cx1, cy1, cx2, cy2, x2, y2);
 
-    // Light inner line
+    // Light inner line for visual softness
     p.stroke(255, 245, 190, 235);
     p.strokeWeight(3);
     p.bezier(x1, y1, cx1, cy1, cx2, cy2, x2, y2);
@@ -233,12 +243,10 @@ registerSketch('sk2', function (p) {
 
   function drawSun(x, y, size, active) {
     if (active) {
-      // Glow
       p.noStroke();
       p.fill(255, 220, 80, 120);
       p.circle(x, y, size * 2.8);
 
-      // Rays
       p.stroke(45);
       p.strokeWeight(2);
       for (let i = 0; i < 12; i++) {
@@ -267,54 +275,79 @@ registerSketch('sk2', function (p) {
     let minutes = p.floor(remainingMs / 60000);
     let seconds = p.floor((remainingMs % 60000) / 1000);
 
+    // Soft interface card
     p.noStroke();
-    p.fill(25);
+    p.fill(255, 250, 240, 220);
+    p.rect(175, 565, 450, 210, 24);
+
+    p.stroke(45, 35, 30, 35);
+    p.strokeWeight(1.5);
+    p.noFill();
+    p.rect(175, 565, 450, 210, 24);
+
+    // Title
+    p.noStroke();
+    p.fill(28);
     p.textAlign(p.CENTER);
+    p.textSize(34);
+    p.text("Focus Window Clock", p.width / 2, 608);
 
-    p.textSize(42);
-    p.text("Focus Window Clock", p.width / 2, 625);
-
-    p.textSize(16);
-    p.fill(65);
+    // Meaning line
+    p.textSize(14);
+    p.fill(75);
     p.text(
-      "A 25-minute ambient focus guide for low-energy indoor study sessions",
+      "A 25-minute ambient focus guide for low-energy indoor study",
       p.width / 2,
-      657
+      635
     );
 
-    // High contrast time pill
-    p.stroke(40);
+    // Time pill
+    p.stroke(35);
     p.strokeWeight(2);
     p.fill(255);
-    p.rect(270, 672, 260, 40, 15);
+    p.rect(290, 654, 220, 42, 18);
 
     p.noStroke();
-    p.fill(30);
+    p.fill(28);
     p.textSize(24);
 
     if (isFinished) {
-      p.text("Break time", p.width / 2, 692);
+      p.text("Break time", p.width / 2, 676);
     } else {
-      p.text(p.nf(minutes, 2) + ":" + p.nf(seconds, 2) + " remaining", p.width / 2, 692);
+      p.text(p.nf(minutes, 2) + ":" + p.nf(seconds, 2), p.width / 2, 676);
     }
 
-    drawButton(buttons.startPause, isRunning ? "Pause" : "Start");
-    drawButton(buttons.reset, "Reset");
+    drawButton(buttons.startPause, isRunning ? "Pause" : "Start", true);
+    drawButton(buttons.reset, "Reset", false);
   }
 
-  function drawButton(btn, label) {
+  function drawButton(btn, label, primary) {
     let hover = isInsideButton(btn);
 
-    p.stroke(35);
-    p.strokeWeight(2);
-    p.fill(hover ? 255 : 245);
-    p.rect(btn.x, btn.y, btn.w, btn.h, 12);
+    p.noStroke();
+
+    // Button shadow
+    p.fill(0, 0, 0, hover ? 35 : 22);
+    p.rect(btn.x + 2, btn.y + 3, btn.w, btn.h, 16);
+
+    if (primary) {
+      p.fill(hover ? p.color(38, 38, 52) : p.color(28, 28, 42));
+    } else {
+      p.fill(hover ? p.color(255, 255, 255) : p.color(248, 244, 236));
+    }
+
+    p.rect(btn.x, btn.y, btn.w, btn.h, 16);
+
+    p.stroke(primary ? p.color(28, 28, 42) : p.color(45, 38, 32));
+    p.strokeWeight(1.5);
+    p.noFill();
+    p.rect(btn.x, btn.y, btn.w, btn.h, 16);
 
     p.noStroke();
-    p.fill(30);
     p.textAlign(p.CENTER, p.CENTER);
-    p.textSize(18);
-    p.text(label, btn.x + btn.w / 2, btn.y + btn.h / 2);
+    p.textSize(17);
+    p.fill(primary ? 255 : 35);
+    p.text(label, btn.x + btn.w / 2, btn.y + btn.h / 2 + 1);
   }
 
   p.windowResized = function () {
