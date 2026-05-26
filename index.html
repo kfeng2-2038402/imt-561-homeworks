@@ -67,12 +67,20 @@
       <h3 id="sk2-notes-title">Documenting Iterative Process</h3>
 
       <p>
-        <strong>Context of use:</strong> This clock is designed for quiet study or work spaces, such as a bedroom,
-        study room, café corner, or personal workspace. I often find that when I study or work for a long time,
-        especially when the outside weather feels gloomy, time can feel slow and it becomes harder to stay focused.
-        Instead of asking users to constantly check a digital timer, this clock turns a focus session into a changing
-        window scene. The goal is to make time feel more visual, ambient, and connected to the gradual shift from
-        mental fog to clearer focus.
+        <strong>Context of use:</strong> The Focus Window Clock is designed for students or workers who want to
+        begin a short study session without relying on a stressful countdown timer or constantly checking their
+        phone. The audience I am designing for is not someone who needs exact time every second, but someone who
+        wants a calmer way to enter focus, especially in quiet indoor spaces such as a bedroom, study room, café
+        corner, or personal workspace. This is also connected to my own experience studying in gloomy weather:
+        when the outside environment feels gray or low-energy, time can feel slow and it becomes harder to start
+        working.
+      </p>
+
+      <p>
+        Instead of treating time as only a number, this design turns a 25-minute focus session into a changing
+        window scene. The goal is to support gentle time awareness: users can still see the exact remaining time
+        when they need it, but the main experience is visual and ambient. The window gradually shifts from foggy
+        and muted to clearer and warmer, representing the transition from mental fog to clearer focus.
       </p>
 
       <article class="clock-template">
@@ -82,8 +90,6 @@
 
         <div class="iteration-grid">
           <figure class="iteration-item">
-            <!-- Replace this placeholder with your actual sketch image if you have one -->
-            <!-- <img src="images/sunset sketch1.jpg" alt="Initial sketch of the sunset window clock" /> -->
             <img src="images/sunset-sketch1.jpg" alt="Initial sketch of the sunset window clock" />
             <figcaption>
               Initial idea — I first imagined this as a sunset window clock. The sun’s movement from left to
@@ -93,13 +99,11 @@
           </figure>
 
           <figure class="iteration-item">
-            <!-- Replace this placeholder with your actual sketch image if you have one -->
-            <!-- <img src="images/sunset sketch2.jpg" alt="Refined sketch of the focus window clock" /> -->
             <img src="images/sunset-sketch2.jpg" alt="Second sketch of the sunset window clock" />
             <figcaption>
-              Refined idea — After connecting the design to my study and work context, I changed it into an
-              ambient focus timer. The window gradually moves from foggy and muted to clearer and warmer as the
-              focus session progresses.
+              Refined idea — I shifted the design from a literal clock into an ambient focus timer. Instead of
+              showing real clock time, the window now visualizes the emotional and visual experience of moving
+              through a focus session.
             </figcaption>
           </figure>
         </div>
@@ -108,53 +112,69 @@
           <strong>Design process:</strong> My first version was closer to a traditional clock. I used a sunset
           window scene and imagined the sun as the main time indicator. The sun moving from left to right was
           intended to represent minutes, while the sun moving from top to bottom was intended to represent hours.
-          However, after sketching this idea, I realized that the mapping was not very easy to read. It did not
-          clearly indicate a specific time as a clock, and users might not immediately understand how to interpret
-          the sun’s position.
+          However, after sketching and testing this idea, I realized that the mapping was not very intuitive. It
+          was visually interesting, but it did not clearly answer why someone would use it instead of a normal
+          clock or timer.
         </p>
 
         <p>
-          More importantly, the early version did not connect strongly enough to my actual context of use. My goal
-          was not only to make a visually interesting clock, but to design something that could support the feeling
-          of studying or working when I am tired, distracted, or mentally foggy. Because of this, I shifted the
-          design from a literal sunset clock into an ambient focus timer. In the final version, the window does not
-          represent the real time of day. Instead, it represents the progress of a focus session.
+          After receiving feedback, I reframed the design around a more specific audience and use case: students
+          starting a short focus session. The original 2-minute version worked as a quick prototype demo, but it
+          did not match a realistic study behavior. I changed the intended session length to 25 minutes because it
+          better matches a Pomodoro-style study session and gives the visual transition enough time to feel
+          meaningful. This change made the design feel less like a decorative animation and more like a useful
+          focus tool.
         </p>
 
         <p>
-          In the revised version, the scene starts as pale, gloomy, and foggy. As the session progresses, the fog
-          clouds move outward from the center, the middle of the window becomes brighter, and the sky gradually
-          shifts into warmer colors. This creates a “clearing the fog” effect, which connects to the feeling of
-          slowly entering a better focus state. I also removed the hard trapezoid color layers from the earlier
-          version and replaced them with a continuous gradient and soft atmospheric glow, so the window feels more
-          calm and environmental rather than visually fragmented.
+          <strong>Feedback-based revision:</strong> One major issue in the earlier version was accessibility. The
+          sun path blended too much with the background, so I revised it with a dark outline and a lighter inner
+          line. This creates stronger contrast and makes the path readable even when the sky colors are warm or
+          bright. I also made the active sun larger, added a stronger stroke, and used size and shape in addition
+          to color. This way, users do not have to rely only on color to understand the current progress.
+        </p>
+
+        <p>
+          I also reconsidered the meaning of the visual metaphor. The fog is not just decoration; it represents
+          the unclear mental state at the beginning of a study session. As the timer progresses, the fog becomes
+          lighter, the center of the window opens up, and the sky becomes warmer. This “clearing the fog” effect
+          connects the visual change to the user’s experience of slowly entering focus. Near the end, the warmer
+          color becomes a subtle cue that the user is close to a break.
+        </p>
+
+        <p>
+          <strong>Interaction and edge cases:</strong> I added Start, Pause, and Reset controls because a real
+          study session is often interrupted. If the user is interrupted, they can pause instead of losing their
+          progress. If they want to begin again, they can reset intentionally. I also removed extra status labels
+          such as “Ready” or “In flow” because they made the interface feel crowded and less ambient. Instead, I
+          let the window itself communicate the session stage through fog, light, color, and sun movement.
         </p>
 
         <p>
           <strong>Time mapping:</strong> The sun’s movement no longer represents exact clock time. Instead, it
-          represents the progress of the focus session. The fogginess at the beginning suggests the difficulty of
-          starting work, while the clearing clouds and brighter center area show progress and growing focus. The
-          warmer sky near the end gives a subtle sense of completion and accomplishment. This makes the clock less
-          about reading the exact time and more about sensing time passing in an ambient way.
+          represents progress through the focus session. The exact remaining time is still available in a
+          high-contrast time label, but it works as a backup rather than the main experience. The main design goal
+          is peripheral awareness: users can glance at the window and sense whether they are at the beginning,
+          middle, or end of the session without constantly reading numbers.
         </p>
 
         <p>
           I applied several information visualization principles in the final version. For
-          <strong>mapping</strong>, the sun movement, fog clearing, and color shift all correspond to the progress
-          of the focus session. For <strong>motion</strong>, the fog clouds slowly move from the center toward both
-          sides, making the “clearing” process visible. For <strong>color</strong>, the sky transitions from cool
-          gray-blue tones to warmer yellow and orange tones, suggesting a shift from low energy to focus and
-          completion. For <strong>hierarchy</strong>, the window frame, moving sun, and clearing fog guide the
-          viewer’s attention without requiring them to constantly read numbers.
+          <strong>mapping</strong>, the sun movement, fog clearing, and color shift all correspond to session
+          progress. For <strong>accessibility</strong>, I increased contrast on the sun path and used size and
+          outline to make the active sun more visible. For <strong>hierarchy</strong>, the visual scene remains
+          primary, while the timer and buttons are placed in a separate control panel. For <strong>interaction</strong>,
+          Start, Pause, and Reset support realistic use instead of forcing the user to restart accidentally.
         </p>
 
         <p>
-          <strong>Self-reflection / future work:</strong> This version feels stronger than the early sunset clock
-          because it is tied to a more specific use context. It does not just show that time is passing; it
-          visualizes the experience of moving from distraction to clarity during a focus session. In a future
-          version, I would add an optional session length control, such as 25 minutes for a Pomodoro session or
-          2 minutes for a quick demo. I would also consider adding a subtle completion state, such as a fully clear
-          window or a short message, to help users feel a stronger sense of accomplishment.
+          <strong>Self-reflection / future work:</strong> This version is stronger because it moves beyond simply
+          representing time and instead supports how time is experienced during a study session. It is not meant
+          to replace every timer; it is designed for moments when students need gentle time awareness and emotional
+          support while getting into focus. In a future version, I would add optional session lengths, such as 10,
+          15, or 25 minutes, so users can choose the type of focus session that fits their task. I would also test
+          the design with students to see whether the visual transition actually helps them feel less pressure and
+          less tempted to check their phones.
         </p>
       </article>
     </div>
