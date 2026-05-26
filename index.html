@@ -188,16 +188,21 @@
   <div id="sketch-drawing-sk3" class="sketch-evolution">
     <div class="welcome-template hwk-template" aria-labelledby="sk3-notes-title">
       <h3 id="sk3-notes-title">Documenting Iterative Process</h3>
+
       <p>
-        This section documents the design iteration for my second final clock: the Boba Focus Clock.
+        <strong>Context of use:</strong> The Boba Focus Clock is designed for students who want to start a
+        short study or work session in a less stressful way. The target audience is someone studying at a desk,
+        in a bedroom, in a café, or in a shared study space who wants to stay aware of time without constantly
+        checking a phone or staring at a countdown. Instead of presenting time as a strict productivity metric,
+        this clock embeds time into a familiar everyday object: a cup of boba tea.
       </p>
 
       <p>
-        <strong>Context of use:</strong> This clock is designed for studying or working in everyday spaces,
-        such as a desk, bedroom, café corner, or study area. I often find that when I study or work for a long
-        time, time feels slow and I can become tired or distracted. Instead of making users constantly check a
-        digital timer, this clock embeds time into a familiar daily object: a cup of boba tea. It gives users a
-        playful and low-pressure way to notice time passing during a focus session.
+        The benefit of this design is that users can understand progress at two levels. At the ambient level,
+        they can glance at the drink and notice that the liquid is lower, the pearls are fewer, and the ice has
+        melted. At the precise level, they can look at the time label when they need the exact number. This
+        supports focus because the user does not have to constantly monitor the timer to understand how much time
+        is left.
       </p>
 
       <article class="clock-template">
@@ -217,58 +222,78 @@
           <figure class="iteration-item">
             <img src="images/boba-sketch2.jpg" alt="Second sketch of the boba clock" />
             <figcaption>
-              Refined sketch: After connecting the design to my study and work context, I shifted it from a
-              traditional clock into a focus timer. The liquid level represents the remaining session time, the
-              boba pearls represent remaining minutes, and the straw gently stirs the drink as minute-by-minute
-              feedback.
+              Refined sketch: I shifted the idea from a traditional clock into a focus timer. The liquid level,
+              pearls, and ice became ambient progress cues instead of decorative details.
             </figcaption>
           </figure>
         </div>
 
         <p>
           <strong>Design process:</strong> At first, I approached this design as a boba tea clock, using the
-          folded angle of the straw to represent the hour and minute hands. This version kept the logic of a
-          traditional clock while embedding time into a familiar everyday object: a cup of milk tea. However, as
-          I continued to think about the context of use, I realized that turning it into “another kind of clock”
-          did not create a very strong motivation for people to use it. In contrast, reframing it as a focus
-          timer felt more meaningful and more desirable in the context of studying or working.
+          folded angle of the straw to represent hour and minute hands. This created a playful metaphor, but the
+          mapping still depended on traditional clock logic. After thinking more about the audience, I realized
+          that students would probably not use it just because it was a cute clock. It needed to support a real
+          study behavior.
         </p>
 
         <p>
-          Because of this, I shifted the design into a focus timer for everyday work and study settings. In the
-          final version, the liquid level represents the remaining duration of the focus session, the number of
-          boba pearls represents the remaining minutes, and the straw no longer functions as a traditional clock
-          hand. Instead, it becomes a subtle feedback mechanism that gently stirs the drink once every minute.
-          This makes the passing of time visible without requiring the user to constantly read a digital number.
+          I therefore changed the design into a 25-minute focus timer. The liquid level now represents the
+          remaining duration of the session: the cup starts fuller and gradually empties. The boba pearls also
+          reduce over time, acting like small “time particles” being consumed. The ice cubes slowly melt as the
+          session progresses. Together, these visual changes make time feel embedded in the drink instead of
+          displayed only as a number.
         </p>
 
         <p>
-          To make the design feel more immersive and better connected to the boba tea metaphor, I added several
-          animation details. The boba pearls and ice cubes gently float even when the timer is not stirring, so
-          the drink feels alive rather than static. When each minute passes, the straw slowly stirs the drink,
-          causing the boba and ice cubes to shift slightly. The ice cubes also become smaller and gradually melt
-          as the liquid level goes down. These changes make the design feel less like a decorative clock and more
-          like an ambient, playful way to experience the passing of time.
+          <strong>Feedback-based revision:</strong> The earlier version had several usability problems. First, the
+          straw overlapped with the wording, so I adjusted the layout and moved the cup and controls to create
+          clearer separation between the visual metaphor and the interface. Second, clicking the boba previously
+          reset the timer, which was a poor interaction because users could accidentally lose their session. I
+          changed this so clicking the cup only creates a small shake animation. Timer control is now handled by
+          clear Start, Pause, and Reset buttons.
+        </p>
+
+        <p>
+          I also removed the confusing line in the middle of the glass. It was meant to look like a reflection,
+          but the feedback showed that it looked like an unclear data mark. I kept only a softer side highlight
+          so it reads more as glass reflection instead of a progress line. I also made the remaining time more
+          visible by placing it in a high-contrast time pill at the bottom. This gives users a precise backup
+          without making the exact countdown the only way to understand progress.
+        </p>
+
+        <p>
+          <strong>Interaction and edge cases:</strong> I added Start, Pause, and Reset because real focus sessions
+          are not always uninterrupted. If a user gets a message, needs to answer a question, or leaves the desk
+          briefly, they can pause the timer. If they accidentally click the cup, the session does not reset; it
+          only produces a small tactile shake effect. When the session ends, the timer stops and shows a break
+          state. These changes make the design feel more realistic for actual student use.
+        </p>
+
+        <p>
+          <strong>Time mapping:</strong> The Boba Focus Clock uses both ambient and precise time representation.
+          The drink state gives a peripheral sense of progress, while the digital time label provides precision
+          only when needed. Users should not need to constantly check the number. A fuller cup suggests the
+          beginning of the session, a lower liquid level suggests progress, fewer boba pearls suggest time being
+          used, and melted ice suggests the session is moving toward completion.
         </p>
 
         <p>
           I applied several information visualization principles in the final version. For
-          <strong>hierarchy</strong>, the cup and liquid level are the main visual focus because they communicate
-          the overall progress of the focus session. For <strong>mapping</strong>, the liquid height represents
-          total remaining time, while the number of boba pearls represents remaining minutes. For
-          <strong>motion</strong>, the gentle floating animation keeps the clock feeling alive without becoming
-          too distracting, and the slower stirring animation marks each minute in a subtle way. For
-          <strong>color</strong>, I used warm milk tea tones with pale blue ice cubes so the design feels playful,
-          readable, and connected to the drink metaphor.
+          <strong>mapping</strong>, liquid height, pearl count, and ice size all correspond to remaining session
+          time. For <strong>hierarchy</strong>, the cup is the main visual focus, while the progress bar and time
+          label support quick reading when needed. For <strong>layout</strong>, I simplified the bottom control
+          panel by removing status chips that made the interface crowded. For <strong>interaction</strong>, the
+          buttons support real user control, while the cup click gives feedback without changing timer state.
         </p>
 
         <p>
-          <strong>Self-reflection / future work:</strong> This version is more meaningful than my early sketch
-          because it connects the clock to a specific use context: staying focused while studying or working. The
-          design does not try to replace a precise digital timer, but it creates a softer way to sense time
-          passing. In a future version, I would add an optional mode switch between a 25-minute Pomodoro session
-          and a shorter testing/demo session. I would also consider adding a clearer completion state, such as an
-          empty cup or a gentle message, so users can clearly feel that the focus session is finished.
+          <strong>Self-reflection / future work:</strong> This version is more meaningful than my first sketch
+          because it is designed around a real user need: starting and maintaining a short focus session without
+          adding more phone distraction or timer pressure. It does not try to replace precise digital timers in
+          every situation. Instead, it offers a softer alternative where approximate progress awareness is enough
+          for the user to stay oriented. In a future version, I would test whether users can estimate the session
+          stage from the drink state without reading the exact time. I would also add optional session lengths,
+          such as 10, 15, and 25 minutes, to support different study tasks.
         </p>
       </article>
     </div>
