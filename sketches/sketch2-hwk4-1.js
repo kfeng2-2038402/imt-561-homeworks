@@ -40,7 +40,7 @@ registerSketch('sk2', function (p) {
     drawInterface(progress, remainingMs);
 
     p.noFill();
-    p.stroke(0);
+    p.stroke(110, 98, 92);
     p.strokeWeight(1);
     p.rect(0, 0, p.width - 1, p.height - 1);
   };
@@ -93,11 +93,11 @@ registerSketch('sk2', function (p) {
 
   function drawWindow(x, y, w, h, progress) {
     p.noStroke();
-    p.fill(80, 60, 45, 28);
+    p.fill(96, 72, 88, 24);
     p.rect(x - 24, y - 20, w + 60, h + 58, 14);
 
     p.noFill();
-    p.stroke(28);
+    p.stroke(54, 49, 70);
     p.strokeWeight(8);
     p.rect(x - 30, y - 30, w + 60, h + 60, 10);
 
@@ -109,21 +109,21 @@ registerSketch('sk2', function (p) {
     drawHighContrastSunPath(x, y, w, h, progress);
 
     p.noFill();
-    p.stroke(28);
+    p.stroke(54, 49, 70);
     p.strokeWeight(4);
     p.rect(x, y, w, h, 5);
   }
 
   function drawRoomBackground(progress) {
     let topColor = p.lerpColor(
-      p.color(238, 238, 232),
-      p.color(224, 231, 244),
+      p.color(248, 244, 236),
+      p.color(230, 235, 246),
       progress
     );
 
     let bottomColor = p.lerpColor(
-      p.color(224, 218, 208),
-      p.color(205, 214, 232),
+      p.color(237, 228, 216),
+      p.color(220, 224, 238),
       progress
     );
 
@@ -137,27 +137,27 @@ registerSketch('sk2', function (p) {
 
   function drawSkyGradient(x, y, w, h, progress) {
     let top = p.lerpColor(
-      p.color(180, 192, 205),
-      p.color(88, 126, 205),
+      p.color(176, 196, 222),
+      p.color(116, 141, 202),
       progress
     );
 
     let middle = p.lerpColor(
-      p.color(222, 226, 224),
-      p.color(255, 208, 130),
+      p.color(226, 229, 225),
+      p.color(255, 218, 165),
       progress
     );
 
     let bottom = p.lerpColor(
-      p.color(236, 232, 220),
-      p.color(160, 82, 115),
+      p.color(240, 231, 218),
+      p.color(210, 132, 146),
       progress
     );
 
     if (isFinished) {
-      top = p.color(255, 232, 160);
-      middle = p.color(255, 190, 115);
-      bottom = p.color(210, 115, 120);
+      top = p.color(255, 232, 172);
+      middle = p.color(255, 196, 132);
+      bottom = p.color(216, 135, 145);
     }
 
     for (let i = 0; i < h; i++) {
@@ -176,7 +176,7 @@ registerSketch('sk2', function (p) {
   }
 
   function drawFogAndClarity(x, y, w, h, progress) {
-    let fogAlpha = p.lerp(220, 25, progress);
+    let fogAlpha = p.lerp(210, 22, progress);
     let clearWidth = p.lerp(70, 330, progress);
 
     if (isFinished) {
@@ -186,16 +186,16 @@ registerSketch('sk2', function (p) {
 
     p.noStroke();
 
-    p.fill(255, 255, 255, fogAlpha * 0.48);
+    p.fill(255, 252, 245, fogAlpha * 0.48);
     p.ellipse(x + w * 0.50, y + h * 0.33, w * 0.9, 95);
     p.ellipse(x + w * 0.40, y + h * 0.43, w * 0.76, 72);
     p.ellipse(x + w * 0.62, y + h * 0.50, w * 0.78, 78);
 
-    p.fill(255, 240, 190, p.lerp(20, 90, progress));
+    p.fill(255, 236, 190, p.lerp(20, 88, progress));
     p.ellipse(x + w * 0.5, y + h * 0.45, clearWidth, h * 0.34);
 
     let endWarmth = p.constrain(p.map(progress, 0.75, 1, 0, 1), 0, 1);
-    p.fill(255, 190, 130, endWarmth * 75);
+    p.fill(255, 184, 132, endWarmth * 72);
     p.ellipse(x + w * 0.5, y + h * 0.80, w * 0.95, h * 0.24);
   }
 
@@ -213,11 +213,11 @@ registerSketch('sk2', function (p) {
     let y2 = winY + winH - 90;
 
     p.noFill();
-    p.stroke(28, 28, 44, 235);
+    p.stroke(54, 49, 70, 240);
     p.strokeWeight(7);
     p.bezier(x1, y1, cx1, cy1, cx2, cy2, x2, y2);
 
-    p.stroke(255, 245, 190, 235);
+    p.stroke(255, 239, 185, 240);
     p.strokeWeight(3);
     p.bezier(x1, y1, cx1, cy1, cx2, cy2, x2, y2);
 
@@ -241,10 +241,10 @@ registerSketch('sk2', function (p) {
   function drawSun(x, y, size, active) {
     if (active) {
       p.noStroke();
-      p.fill(255, 220, 80, 120);
+      p.fill(255, 215, 102, 125);
       p.circle(x, y, size * 2.8);
 
-      p.stroke(45);
+      p.stroke(86, 65, 70);
       p.strokeWeight(2);
       for (let i = 0; i < 12; i++) {
         let a = i * 30 + p.frameCount * 0.22;
@@ -256,13 +256,13 @@ registerSketch('sk2', function (p) {
         );
       }
 
-      p.fill(255, 215, 70);
-      p.stroke(45);
+      p.fill(255, 208, 82);
+      p.stroke(86, 65, 70);
       p.strokeWeight(3);
       p.circle(x, y, size);
     } else {
-      p.fill(255, 238, 160);
-      p.stroke(45);
+      p.fill(255, 232, 145);
+      p.stroke(86, 65, 70);
       p.strokeWeight(2);
       p.circle(x, y, size);
     }
@@ -273,35 +273,35 @@ registerSketch('sk2', function (p) {
     let seconds = p.floor((remainingMs % 60000) / 1000);
 
     p.noStroke();
-    p.fill(255, 250, 240, 225);
+    p.fill(255, 250, 242, 228);
     p.rect(175, 565, 450, 210, 24);
 
-    p.stroke(45, 35, 30, 35);
+    p.stroke(88, 70, 84, 38);
     p.strokeWeight(1.5);
     p.noFill();
     p.rect(175, 565, 450, 210, 24);
 
     p.noStroke();
-    p.fill(28);
+    p.fill(48, 43, 60);
     p.textAlign(p.CENTER);
     p.textSize(34);
     p.text("Focus Window Clock", p.width / 2, 608);
 
     p.textSize(14);
-    p.fill(75);
+    p.fill(92, 80, 92);
     p.text(
       "A 25-minute ambient focus guide for low-energy indoor study",
       p.width / 2,
       635
     );
 
-    p.stroke(35);
+    p.stroke(70, 60, 80);
     p.strokeWeight(2);
-    p.fill(255);
+    p.fill(255, 253, 248);
     p.rect(290, 660, 220, 46, 20);
 
     p.noStroke();
-    p.fill(28);
+    p.fill(48, 43, 60);
     p.textSize(26);
 
     if (isFinished) {
@@ -318,18 +318,18 @@ registerSketch('sk2', function (p) {
     let hover = isInsideButton(btn);
 
     p.noStroke();
-    p.fill(0, 0, 0, hover ? 35 : 22);
+    p.fill(60, 45, 70, hover ? 34 : 22);
     p.rect(btn.x + 2, btn.y + 3, btn.w, btn.h, 16);
 
     if (primary) {
-      p.fill(hover ? p.color(38, 38, 52) : p.color(28, 28, 42));
+      p.fill(hover ? p.color(82, 73, 112) : p.color(65, 58, 92));
     } else {
-      p.fill(hover ? p.color(255, 255, 255) : p.color(248, 244, 236));
+      p.fill(hover ? p.color(255, 255, 255) : p.color(250, 246, 238));
     }
 
     p.rect(btn.x, btn.y, btn.w, btn.h, 16);
 
-    p.stroke(primary ? p.color(28, 28, 42) : p.color(45, 38, 32));
+    p.stroke(primary ? p.color(65, 58, 92) : p.color(95, 82, 92));
     p.strokeWeight(1.5);
     p.noFill();
     p.rect(btn.x, btn.y, btn.w, btn.h, 16);
@@ -337,7 +337,7 @@ registerSketch('sk2', function (p) {
     p.noStroke();
     p.textAlign(p.CENTER, p.CENTER);
     p.textSize(17);
-    p.fill(primary ? 255 : 35);
+    p.fill(primary ? 255 : p.color(58, 51, 66));
     p.text(label, btn.x + btn.w / 2, btn.y + btn.h / 2 + 1);
   }
 

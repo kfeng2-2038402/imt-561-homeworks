@@ -24,7 +24,7 @@ registerSketch('sk3', function (p) {
   };
 
   p.draw = function () {
-    p.background(245, 238, 225);
+    p.background(250, 242, 230);
 
     let elapsed = getElapsedSeconds();
     let progress = p.constrain(elapsed / TOTAL_SECONDS, 0, 1);
@@ -50,7 +50,7 @@ registerSketch('sk3', function (p) {
     drawInterface(remaining, progress);
 
     p.noFill();
-    p.stroke(0);
+    p.stroke(126, 96, 78);
     p.strokeWeight(1);
     p.rect(0, 0, p.width - 1, p.height - 1);
   };
@@ -93,7 +93,6 @@ registerSketch('sk3', function (p) {
       return;
     }
 
-    // Clicking the cup only shakes it. It does not reset the timer.
     if (p.mouseX > 250 && p.mouseX < 550 && p.mouseY > 160 && p.mouseY < 560) {
       shake = 8;
     }
@@ -138,9 +137,9 @@ registerSketch('sk3', function (p) {
     let cupW = 275;
     let cupH = 330;
 
-    p.stroke(65);
+    p.stroke(92, 65, 52);
     p.strokeWeight(4);
-    p.fill(255, 248, 235, 245);
+    p.fill(255, 249, 238, 245);
     p.quad(
       cupX - cupW / 2,
       cupY - cupH / 2,
@@ -155,9 +154,9 @@ registerSketch('sk3', function (p) {
     let liquidH = p.map(progress, 0, 1, cupH - 38, 35);
     let liquidTop = cupY + cupH / 2 - liquidH;
 
-    let teaR = p.lerp(205, 230, progress);
-    let teaG = p.lerp(155, 195, progress);
-    let teaB = p.lerp(95, 150, progress);
+    let teaR = p.lerp(204, 232, progress);
+    let teaG = p.lerp(149, 196, progress);
+    let teaB = p.lerp(92, 145, progress);
 
     if (isFinished) {
       teaR = 235;
@@ -166,7 +165,7 @@ registerSketch('sk3', function (p) {
     }
 
     p.noStroke();
-    p.fill(teaR, teaG, teaB, 190);
+    p.fill(teaR, teaG, teaB, 192);
     p.quad(
       cupX - cupW / 2 + 16,
       liquidTop,
@@ -178,7 +177,7 @@ registerSketch('sk3', function (p) {
       cupY + cupH / 2 - 14
     );
 
-    p.fill(255, 236, 205, 115);
+    p.fill(255, 237, 210, 125);
     p.ellipse(cupX, liquidTop + 16, cupW - 58, 24);
 
     drawIceCubes(cupX, cupY, cupW, cupH, liquidTop, liquidH, progress);
@@ -186,19 +185,18 @@ registerSketch('sk3', function (p) {
     drawStraw(cupX, cupY, progress);
 
     p.noFill();
-    p.stroke(65);
+    p.stroke(92, 65, 52);
     p.strokeWeight(4);
     p.ellipse(cupX, cupY - cupH / 2, cupW + 10, 34);
 
-    // Soft reflection only, not a progress line
-    p.stroke(255, 255, 255, 95);
+    p.stroke(255, 255, 255, 100);
     p.strokeWeight(4);
     p.line(cupX - 88, cupY - 126, cupX - 58, cupY + 82);
   }
 
   function drawIceCubes(cupX, cupY, cupW, cupH, liquidTop, liquidH, progress) {
     let melt = p.lerp(1, 0.35, progress);
-    let alpha = p.lerp(220, 105, progress);
+    let alpha = p.lerp(215, 105, progress);
 
     let topBound = liquidTop + 35;
     let bottomBound = p.min(cupY + cupH / 2 - 105, liquidTop + liquidH * 0.5);
@@ -222,9 +220,9 @@ registerSketch('sk3', function (p) {
       p.rotate(ice.angle + p.sin(p.frameCount * 0.01 + ice.phase) * 0.03);
       p.rectMode(p.CENTER);
 
-      p.stroke(110, 160, 190, alpha * 0.75);
+      p.stroke(130, 165, 185, alpha * 0.72);
       p.strokeWeight(2);
-      p.fill(230, 245, 255, alpha);
+      p.fill(235, 247, 255, alpha);
       p.rect(0, 0, size, size, 7);
 
       p.noStroke();
@@ -246,16 +244,16 @@ registerSketch('sk3', function (p) {
       let y = cupY + b.y + p.cos(p.frameCount * 0.011 + b.phase) * 1.0;
 
       p.noStroke();
-      p.fill(45, 30, 25, 225);
+      p.fill(55, 35, 28, 230);
       p.circle(x, y, b.size);
 
-      p.fill(255, 255, 255, 55);
+      p.fill(255, 255, 255, 58);
       p.circle(x - b.size * 0.18, y - b.size * 0.18, b.size * 0.25);
     }
 
     if (isFinished) {
       p.noStroke();
-      p.fill(255, 220, 120, 150);
+      p.fill(255, 218, 128, 150);
       for (let i = 0; i < 8; i++) {
         let angle = (p.TWO_PI / 8) * i + p.frameCount * 0.01;
         let x = cupX + p.cos(angle) * 115;
@@ -275,12 +273,12 @@ registerSketch('sk3', function (p) {
 
     let shift = p.sin(progress * p.TWO_PI) * 8;
 
-    p.stroke(80, 40, 50, 230);
+    p.stroke(110, 62, 76, 230);
     p.strokeWeight(16);
     p.line(topX + shift, topY, bendX + shift * 0.5, bendY);
     p.line(bendX + shift * 0.5, bendY, bottomX, bottomY);
 
-    p.stroke(220, 95, 120, 240);
+    p.stroke(214, 112, 138, 242);
     p.strokeWeight(9);
     p.line(topX + shift, topY, bendX + shift * 0.5, bendY);
     p.line(bendX + shift * 0.5, bendY, bottomX, bottomY);
@@ -293,51 +291,48 @@ registerSketch('sk3', function (p) {
     p.noStroke();
     p.textAlign(p.CENTER);
 
-    p.fill(50);
+    p.fill(74, 50, 38);
     p.textSize(36);
     p.text("Boba Focus Clock", p.width / 2, 48);
 
     p.textSize(16);
-    p.fill(75);
+    p.fill(112, 82, 64);
     p.text(
       "A 25-minute focus timer with ambient drink-level progress",
       p.width / 2,
       80
     );
 
-    // Bottom control panel
     p.noStroke();
-    p.fill(255, 250, 240, 225);
+    p.fill(255, 250, 240, 230);
     p.rect(170, 595, 460, 185, 24);
 
-    p.stroke(45, 35, 30, 35);
+    p.stroke(120, 86, 65, 38);
     p.strokeWeight(1.5);
     p.noFill();
     p.rect(170, 595, 460, 185, 24);
 
-    // Progress bar
     let barX = 220;
     let barY = 618;
     let barW = 360;
     let barH = 18;
 
-    p.stroke(65);
+    p.stroke(105, 70, 52);
     p.strokeWeight(2);
     p.fill(255, 248, 235);
     p.rect(barX, barY, barW, barH, 10);
 
     p.noStroke();
-    p.fill(205, 155, 95);
+    p.fill(198, 139, 82);
     p.rect(barX, barY, barW * (1 - progress), barH, 10);
 
-    // High contrast time pill
-    p.stroke(40);
+    p.stroke(105, 70, 52);
     p.strokeWeight(2);
-    p.fill(255);
+    p.fill(255, 253, 248);
     p.rect(270, 650, 260, 46, 18);
 
     p.noStroke();
-    p.fill(30);
+    p.fill(74, 50, 38);
     p.textSize(28);
 
     if (isFinished) {
@@ -354,18 +349,18 @@ registerSketch('sk3', function (p) {
     let hover = isInsideButton(btn);
 
     p.noStroke();
-    p.fill(0, 0, 0, hover ? 35 : 22);
+    p.fill(80, 50, 36, hover ? 34 : 22);
     p.rect(btn.x + 2, btn.y + 3, btn.w, btn.h, 16);
 
     if (primary) {
-      p.fill(hover ? p.color(38, 38, 52) : p.color(28, 28, 42));
+      p.fill(hover ? p.color(126, 83, 60) : p.color(105, 70, 52));
     } else {
-      p.fill(hover ? p.color(255, 255, 255) : p.color(248, 244, 236));
+      p.fill(hover ? p.color(255, 255, 255) : p.color(250, 244, 236));
     }
 
     p.rect(btn.x, btn.y, btn.w, btn.h, 16);
 
-    p.stroke(primary ? p.color(28, 28, 42) : p.color(45, 38, 32));
+    p.stroke(primary ? p.color(105, 70, 52) : p.color(120, 88, 68));
     p.strokeWeight(1.5);
     p.noFill();
     p.rect(btn.x, btn.y, btn.w, btn.h, 16);
@@ -373,7 +368,7 @@ registerSketch('sk3', function (p) {
     p.noStroke();
     p.textAlign(p.CENTER, p.CENTER);
     p.textSize(17);
-    p.fill(primary ? 255 : 35);
+    p.fill(primary ? 255 : p.color(84, 58, 44));
     p.text(label, btn.x + btn.w / 2, btn.y + btn.h / 2 + 1);
   }
 
