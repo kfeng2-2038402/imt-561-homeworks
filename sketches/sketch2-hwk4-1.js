@@ -1,6 +1,6 @@
 registerSketch('sk2', function (p) {
   const CANVAS_SIZE = 800;
-  const SESSION_LENGTH = 25 * 60 * 1000; // 25-minute focus session
+  const SESSION_LENGTH = 25 * 60 * 1000;
 
   let elapsedBeforePause = 0;
   let startMillis = 0;
@@ -37,7 +37,6 @@ registerSketch('sk2', function (p) {
     let winH = 420;
 
     drawWindow(winX, winY, winW, winH, progress);
-    drawStageCue(winX, winY, winW, winH, progress);
     drawInterface(progress, remainingMs);
 
     p.noFill();
@@ -54,9 +53,7 @@ registerSketch('sk2', function (p) {
   }
 
   function startTimer() {
-    if (isFinished) {
-      resetTimer();
-    }
+    if (isFinished) resetTimer();
     isRunning = true;
     startMillis = p.millis();
   }
@@ -75,11 +72,8 @@ registerSketch('sk2', function (p) {
 
   p.mousePressed = function () {
     if (isInsideButton(buttons.startPause)) {
-      if (isRunning) {
-        pauseTimer();
-      } else {
-        startTimer();
-      }
+      if (isRunning) pauseTimer();
+      else startTimer();
       return;
     }
 
@@ -274,40 +268,12 @@ registerSketch('sk2', function (p) {
     }
   }
 
-  function drawStageCue(x, y, w, h, progress) {
-    let label = "Ready";
-    if (isFinished) {
-      label = "Break soon";
-    } else if (progress > 0.66) {
-      label = "Break soon";
-    } else if (progress > 0.33) {
-      label = "In flow";
-    } else if (progress > 0) {
-      label = "Starting";
-    }
-
-    p.noStroke();
-    p.fill(255, 250, 240, 225);
-    p.rect(x + 130, y + h + 18, 160, 34, 17);
-
-    p.stroke(40);
-    p.strokeWeight(1.5);
-    p.noFill();
-    p.rect(x + 130, y + h + 18, 160, 34, 17);
-
-    p.noStroke();
-    p.fill(35);
-    p.textAlign(p.CENTER, p.CENTER);
-    p.textSize(15);
-    p.text(label, x + 210, y + h + 35);
-  }
-
   function drawInterface(progress, remainingMs) {
     let minutes = p.floor(remainingMs / 60000);
     let seconds = p.floor((remainingMs % 60000) / 1000);
 
     p.noStroke();
-    p.fill(255, 250, 240, 220);
+    p.fill(255, 250, 240, 225);
     p.rect(175, 565, 450, 210, 24);
 
     p.stroke(45, 35, 30, 35);
@@ -332,16 +298,16 @@ registerSketch('sk2', function (p) {
     p.stroke(35);
     p.strokeWeight(2);
     p.fill(255);
-    p.rect(290, 654, 220, 42, 18);
+    p.rect(290, 660, 220, 46, 20);
 
     p.noStroke();
     p.fill(28);
-    p.textSize(24);
+    p.textSize(26);
 
     if (isFinished) {
-      p.text("Break time", p.width / 2, 676);
+      p.text("Break time", p.width / 2, 684);
     } else {
-      p.text(p.nf(minutes, 2) + ":" + p.nf(seconds, 2), p.width / 2, 676);
+      p.text(p.nf(minutes, 2) + ":" + p.nf(seconds, 2), p.width / 2, 684);
     }
 
     drawButton(buttons.startPause, isRunning ? "Pause" : "Start", true);

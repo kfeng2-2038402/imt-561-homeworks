@@ -12,8 +12,8 @@ registerSketch('sk3', function (p) {
   let shake = 0;
 
   const buttons = {
-    startPause: { x: 250, y: 705, w: 135, h: 44 },
-    reset: { x: 415, y: 705, w: 135, h: 44 }
+    startPause: { x: 250, y: 720, w: 135, h: 42 },
+    reset: { x: 415, y: 720, w: 135, h: 42 }
   };
 
   p.setup = function () {
@@ -63,9 +63,7 @@ registerSketch('sk3', function (p) {
   }
 
   function startTimer() {
-    if (isFinished) {
-      resetTimer();
-    }
+    if (isFinished) resetTimer();
     isRunning = true;
     startMillis = p.millis();
   }
@@ -85,11 +83,8 @@ registerSketch('sk3', function (p) {
 
   p.mousePressed = function () {
     if (isInsideButton(buttons.startPause)) {
-      if (isRunning) {
-        pauseTimer();
-      } else {
-        startTimer();
-      }
+      if (isRunning) pauseTimer();
+      else startTimer();
       return;
     }
 
@@ -98,8 +93,8 @@ registerSketch('sk3', function (p) {
       return;
     }
 
-    // Clicking the cup gives a tactile response only. It does not reset the timer.
-    if (p.mouseX > 250 && p.mouseX < 550 && p.mouseY > 190 && p.mouseY < 580) {
+    // Clicking the cup only shakes it. It does not reset the timer.
+    if (p.mouseX > 250 && p.mouseX < 550 && p.mouseY > 160 && p.mouseY < 560) {
       shake = 8;
     }
   };
@@ -139,9 +134,9 @@ registerSketch('sk3', function (p) {
 
   function drawBobaCup(progress) {
     let cupX = p.width / 2;
-    let cupY = 390;
+    let cupY = 350;
     let cupW = 275;
-    let cupH = 355;
+    let cupH = 330;
 
     p.stroke(65);
     p.strokeWeight(4);
@@ -195,10 +190,10 @@ registerSketch('sk3', function (p) {
     p.strokeWeight(4);
     p.ellipse(cupX, cupY - cupH / 2, cupW + 10, 34);
 
-    // Soft reflection only, not a progress line.
+    // Soft reflection only, not a progress line
     p.stroke(255, 255, 255, 95);
     p.strokeWeight(4);
-    p.line(cupX - 88, cupY - 138, cupX - 58, cupY + 95);
+    p.line(cupX - 88, cupY - 126, cupX - 58, cupY + 82);
   }
 
   function drawIceCubes(cupX, cupY, cupW, cupH, liquidTop, liquidH, progress) {
@@ -272,11 +267,11 @@ registerSketch('sk3', function (p) {
 
   function drawStraw(cupX, cupY, progress) {
     let topX = cupX - 45;
-    let topY = 110;
+    let topY = 95;
     let bendX = cupX + 35;
-    let bendY = cupY - 120;
+    let bendY = cupY - 112;
     let bottomX = cupX + 10;
-    let bottomY = cupY + 105;
+    let bottomY = cupY + 96;
 
     let shift = p.sin(progress * p.TWO_PI) * 8;
 
@@ -310,10 +305,19 @@ registerSketch('sk3', function (p) {
       80
     );
 
-    drawStageLabel(progress);
+    // Bottom control panel
+    p.noStroke();
+    p.fill(255, 250, 240, 225);
+    p.rect(170, 595, 460, 185, 24);
 
+    p.stroke(45, 35, 30, 35);
+    p.strokeWeight(1.5);
+    p.noFill();
+    p.rect(170, 595, 460, 185, 24);
+
+    // Progress bar
     let barX = 220;
-    let barY = 615;
+    let barY = 618;
     let barW = 360;
     let barH = 18;
 
@@ -326,46 +330,24 @@ registerSketch('sk3', function (p) {
     p.fill(205, 155, 95);
     p.rect(barX, barY, barW * (1 - progress), barH, 10);
 
+    // High contrast time pill
     p.stroke(40);
     p.strokeWeight(2);
     p.fill(255);
-    p.rect(270, 645, 260, 44, 16);
+    p.rect(270, 650, 260, 46, 18);
 
     p.noStroke();
     p.fill(30);
     p.textSize(28);
 
     if (isFinished) {
-      p.text("Done — break time", p.width / 2, 668);
+      p.text("Break time", p.width / 2, 674);
     } else {
-      p.text(p.nf(minutes, 2) + ":" + p.nf(seconds, 2), p.width / 2, 668);
+      p.text(p.nf(minutes, 2) + ":" + p.nf(seconds, 2), p.width / 2, 674);
     }
 
     drawButton(buttons.startPause, isRunning ? "Pause" : "Start", true);
     drawButton(buttons.reset, "Reset", false);
-  }
-
-  function drawStageLabel(progress) {
-    let label = "Full cup";
-    if (isFinished) {
-      label = "Break time";
-    } else if (progress > 0.66) {
-      label = "Almost done";
-    } else if (progress > 0.33) {
-      label = "In flow";
-    } else if (progress > 0) {
-      label = "Starting";
-    }
-
-    p.stroke(55);
-    p.strokeWeight(1.5);
-    p.fill(255, 250, 240);
-    p.rect(315, 92, 170, 32, 16);
-
-    p.noStroke();
-    p.fill(45);
-    p.textSize(15);
-    p.text(label, p.width / 2, 109);
   }
 
   function drawButton(btn, label, primary) {
