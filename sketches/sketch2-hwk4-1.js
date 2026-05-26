@@ -37,6 +37,7 @@ registerSketch('sk2', function (p) {
     let winH = 420;
 
     drawWindow(winX, winY, winW, winH, progress);
+    drawStageCue(winX, winY, winW, winH, progress);
     drawInterface(progress, remainingMs);
 
     p.noFill();
@@ -97,18 +98,15 @@ registerSketch('sk2', function (p) {
   }
 
   function drawWindow(x, y, w, h, progress) {
-    // Outer shadow
     p.noStroke();
     p.fill(80, 60, 45, 28);
     p.rect(x - 24, y - 20, w + 60, h + 58, 14);
 
-    // Outer frame
     p.noFill();
     p.stroke(28);
     p.strokeWeight(8);
     p.rect(x - 30, y - 30, w + 60, h + 60, 10);
 
-    // Inner frame
     p.strokeWeight(3);
     p.rect(x, y, w, h, 5);
 
@@ -116,7 +114,6 @@ registerSketch('sk2', function (p) {
     drawFogAndClarity(x, y, w, h, progress);
     drawHighContrastSunPath(x, y, w, h, progress);
 
-    // Window frame overlay
     p.noFill();
     p.stroke(28);
     p.strokeWeight(4);
@@ -163,6 +160,12 @@ registerSketch('sk2', function (p) {
       progress
     );
 
+    if (isFinished) {
+      top = p.color(255, 232, 160);
+      middle = p.color(255, 190, 115);
+      bottom = p.color(210, 115, 120);
+    }
+
     for (let i = 0; i < h; i++) {
       let t = i / h;
       let c;
@@ -182,21 +185,23 @@ registerSketch('sk2', function (p) {
     let fogAlpha = p.lerp(220, 25, progress);
     let clearWidth = p.lerp(70, 330, progress);
 
+    if (isFinished) {
+      fogAlpha = 0;
+      clearWidth = 350;
+    }
+
     p.noStroke();
 
-    // Fog layers at the beginning of focus
     p.fill(255, 255, 255, fogAlpha * 0.48);
     p.ellipse(x + w * 0.50, y + h * 0.33, w * 0.9, 95);
     p.ellipse(x + w * 0.40, y + h * 0.43, w * 0.76, 72);
     p.ellipse(x + w * 0.62, y + h * 0.50, w * 0.78, 78);
 
-    // Light gradually opens up as the session continues
     p.fill(255, 240, 190, p.lerp(20, 90, progress));
     p.ellipse(x + w * 0.5, y + h * 0.45, clearWidth, h * 0.34);
 
-    // Warm cue near completion
     let endWarmth = p.constrain(p.map(progress, 0.75, 1, 0, 1), 0, 1);
-    p.fill(255, 190, 130, endWarmth * 60);
+    p.fill(255, 190, 130, endWarmth * 75);
     p.ellipse(x + w * 0.5, y + h * 0.80, w * 0.95, h * 0.24);
   }
 
@@ -213,13 +218,11 @@ registerSketch('sk2', function (p) {
     let x2 = winX + 65;
     let y2 = winY + winH - 90;
 
-    // Dark outline for accessibility
     p.noFill();
     p.stroke(28, 28, 44, 235);
     p.strokeWeight(7);
     p.bezier(x1, y1, cx1, cy1, cx2, cy2, x2, y2);
 
-    // Light inner line for visual softness
     p.stroke(255, 245, 190, 235);
     p.strokeWeight(3);
     p.bezier(x1, y1, cx1, cy1, cx2, cy2, x2, y2);
@@ -271,11 +274,38 @@ registerSketch('sk2', function (p) {
     }
   }
 
+  function drawStageCue(x, y, w, h, progress) {
+    let label = "Ready";
+    if (isFinished) {
+      label = "Break soon";
+    } else if (progress > 0.66) {
+      label = "Break soon";
+    } else if (progress > 0.33) {
+      label = "In flow";
+    } else if (progress > 0) {
+      label = "Starting";
+    }
+
+    p.noStroke();
+    p.fill(255, 250, 240, 225);
+    p.rect(x + 130, y + h + 18, 160, 34, 17);
+
+    p.stroke(40);
+    p.strokeWeight(1.5);
+    p.noFill();
+    p.rect(x + 130, y + h + 18, 160, 34, 17);
+
+    p.noStroke();
+    p.fill(35);
+    p.textAlign(p.CENTER, p.CENTER);
+    p.textSize(15);
+    p.text(label, x + 210, y + h + 35);
+  }
+
   function drawInterface(progress, remainingMs) {
     let minutes = p.floor(remainingMs / 60000);
     let seconds = p.floor((remainingMs % 60000) / 1000);
 
-    // Soft interface card
     p.noStroke();
     p.fill(255, 250, 240, 220);
     p.rect(175, 565, 450, 210, 24);
@@ -285,14 +315,12 @@ registerSketch('sk2', function (p) {
     p.noFill();
     p.rect(175, 565, 450, 210, 24);
 
-    // Title
     p.noStroke();
     p.fill(28);
     p.textAlign(p.CENTER);
     p.textSize(34);
     p.text("Focus Window Clock", p.width / 2, 608);
 
-    // Meaning line
     p.textSize(14);
     p.fill(75);
     p.text(
@@ -301,7 +329,6 @@ registerSketch('sk2', function (p) {
       635
     );
 
-    // Time pill
     p.stroke(35);
     p.strokeWeight(2);
     p.fill(255);
@@ -325,8 +352,6 @@ registerSketch('sk2', function (p) {
     let hover = isInsideButton(btn);
 
     p.noStroke();
-
-    // Button shadow
     p.fill(0, 0, 0, hover ? 35 : 22);
     p.rect(btn.x + 2, btn.y + 3, btn.w, btn.h, 16);
 

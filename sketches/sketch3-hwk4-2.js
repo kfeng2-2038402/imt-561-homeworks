@@ -98,7 +98,7 @@ registerSketch('sk3', function (p) {
       return;
     }
 
-    // Clicking the cup only shakes it. It does not reset time.
+    // Clicking the cup gives a tactile response only. It does not reset the timer.
     if (p.mouseX > 250 && p.mouseX < 550 && p.mouseY > 190 && p.mouseY < 580) {
       shake = 8;
     }
@@ -143,7 +143,6 @@ registerSketch('sk3', function (p) {
     let cupW = 275;
     let cupH = 355;
 
-    // Cup shape
     p.stroke(65);
     p.strokeWeight(4);
     p.fill(255, 248, 235, 245);
@@ -158,14 +157,18 @@ registerSketch('sk3', function (p) {
       cupY + cupH / 2
     );
 
-    // Liquid level: high at start, low at end
     let liquidH = p.map(progress, 0, 1, cupH - 38, 35);
     let liquidTop = cupY + cupH / 2 - liquidH;
 
-    // Tea becomes lighter as session finishes
     let teaR = p.lerp(205, 230, progress);
     let teaG = p.lerp(155, 195, progress);
     let teaB = p.lerp(95, 150, progress);
+
+    if (isFinished) {
+      teaR = 235;
+      teaG = 205;
+      teaB = 160;
+    }
 
     p.noStroke();
     p.fill(teaR, teaG, teaB, 190);
@@ -180,7 +183,6 @@ registerSketch('sk3', function (p) {
       cupY + cupH / 2 - 14
     );
 
-    // Liquid surface
     p.fill(255, 236, 205, 115);
     p.ellipse(cupX, liquidTop + 16, cupW - 58, 24);
 
@@ -188,13 +190,12 @@ registerSketch('sk3', function (p) {
     drawBobas(cupX, cupY, progress);
     drawStraw(cupX, cupY, progress);
 
-    // Cup rim
     p.noFill();
     p.stroke(65);
     p.strokeWeight(4);
     p.ellipse(cupX, cupY - cupH / 2, cupW + 10, 34);
 
-    // Soft highlight, not a confusing middle line
+    // Soft reflection only, not a progress line.
     p.stroke(255, 255, 255, 95);
     p.strokeWeight(4);
     p.line(cupX - 88, cupY - 138, cupX - 58, cupY + 95);
@@ -256,10 +257,20 @@ registerSketch('sk3', function (p) {
       p.fill(255, 255, 255, 55);
       p.circle(x - b.size * 0.18, y - b.size * 0.18, b.size * 0.25);
     }
+
+    if (isFinished) {
+      p.noStroke();
+      p.fill(255, 220, 120, 150);
+      for (let i = 0; i < 8; i++) {
+        let angle = (p.TWO_PI / 8) * i + p.frameCount * 0.01;
+        let x = cupX + p.cos(angle) * 115;
+        let y = cupY - 40 + p.sin(angle) * 45;
+        p.circle(x, y, 5);
+      }
+    }
   }
 
   function drawStraw(cupX, cupY, progress) {
-    // Straw stays away from text and acts as a subtle progress cue.
     let topX = cupX - 45;
     let topY = 110;
     let bendX = cupX + 35;
@@ -299,7 +310,8 @@ registerSketch('sk3', function (p) {
       80
     );
 
-    // Progress bar gives a quick peripheral cue
+    drawStageLabel(progress);
+
     let barX = 220;
     let barY = 615;
     let barW = 360;
@@ -314,7 +326,6 @@ registerSketch('sk3', function (p) {
     p.fill(205, 155, 95);
     p.rect(barX, barY, barW * (1 - progress), barH, 10);
 
-    // High contrast time pill
     p.stroke(40);
     p.strokeWeight(2);
     p.fill(255);
@@ -330,23 +341,58 @@ registerSketch('sk3', function (p) {
       p.text(p.nf(minutes, 2) + ":" + p.nf(seconds, 2), p.width / 2, 668);
     }
 
-    drawButton(buttons.startPause, isRunning ? "Pause" : "Start");
-    drawButton(buttons.reset, "Reset");
+    drawButton(buttons.startPause, isRunning ? "Pause" : "Start", true);
+    drawButton(buttons.reset, "Reset", false);
   }
 
-  function drawButton(btn, label) {
-    let hover = isInsideButton(btn);
+  function drawStageLabel(progress) {
+    let label = "Full cup";
+    if (isFinished) {
+      label = "Break time";
+    } else if (progress > 0.66) {
+      label = "Almost done";
+    } else if (progress > 0.33) {
+      label = "In flow";
+    } else if (progress > 0) {
+      label = "Starting";
+    }
 
-    p.stroke(40);
-    p.strokeWeight(2);
-    p.fill(hover ? 255 : 248);
-    p.rect(btn.x, btn.y, btn.w, btn.h, 12);
+    p.stroke(55);
+    p.strokeWeight(1.5);
+    p.fill(255, 250, 240);
+    p.rect(315, 92, 170, 32, 16);
 
     p.noStroke();
-    p.fill(35);
+    p.fill(45);
+    p.textSize(15);
+    p.text(label, p.width / 2, 109);
+  }
+
+  function drawButton(btn, label, primary) {
+    let hover = isInsideButton(btn);
+
+    p.noStroke();
+    p.fill(0, 0, 0, hover ? 35 : 22);
+    p.rect(btn.x + 2, btn.y + 3, btn.w, btn.h, 16);
+
+    if (primary) {
+      p.fill(hover ? p.color(38, 38, 52) : p.color(28, 28, 42));
+    } else {
+      p.fill(hover ? p.color(255, 255, 255) : p.color(248, 244, 236));
+    }
+
+    p.rect(btn.x, btn.y, btn.w, btn.h, 16);
+
+    p.stroke(primary ? p.color(28, 28, 42) : p.color(45, 38, 32));
+    p.strokeWeight(1.5);
+    p.noFill();
+    p.rect(btn.x, btn.y, btn.w, btn.h, 16);
+
+    p.noStroke();
     p.textAlign(p.CENTER, p.CENTER);
-    p.textSize(18);
-    p.text(label, btn.x + btn.w / 2, btn.y + btn.h / 2);
+    p.textSize(17);
+    p.fill(primary ? 255 : 35);
+    p.text(label, btn.x + btn.w / 2, btn.y + btn.h / 2 + 1);
   }
 
   p.windowResized = function () {
